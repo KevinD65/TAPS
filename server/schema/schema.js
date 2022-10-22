@@ -1,7 +1,7 @@
-const {projects, clients} = require('../sampleData.js');
 const Project = require("../models/Project");
 const Client = require('../models/Client');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType } = require('graphql');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt } = require('graphql');
+const Tileset = require("../models/Tileset.js");
 
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -32,30 +32,30 @@ const ProjectType = new GraphQLObjectType({
 const TilesetType = new GraphQLObjectType({
     name: 'Tileset',
     fields: () => ({
-        backgroundcolor: {type: String},
-        class: {type: String},
-        columns: {type: number},
-        fillmode: {type: String},
-        firstgid: {type: Number},
+        backgroundcolor: {type: GraphQLString},
+        class: {type: GraphQLString},
+        columns: {type: GraphQLInt},
+        fillmode: {type: GraphQLString},
+        firstgid: {type: GraphQLInt},
         //grid: {type: Grid},
-        image: {type: String},
-        imageheight: {type: Number},
-        imagewidth: {type: Number},
-        margin: {type: Number},
-        objectalignment: {type: String},
-        properties: {type: [Property]},
-        source: {type: Number},
-        terrains: {type: [Terrain]},
-        tilecount: {type: Number},
-        source: {type: String},
-        tiledversion: {type: String},
-        tilerendersize: {type: String},
-        tiles: {type: [Tile]},
-        tilewidth: {type: Number},
-        transformations: {type: Transformation},
-        transparentcolor: {type: String},
-        type: {type: String},
-        version: {type: String}
+        image: {type: GraphQLString},
+        imageheight: {type: GraphQLInt},
+        imagewidth: {type: GraphQLInt},
+        margin: {type: GraphQLInt},
+        objectalignment: {type: GraphQLString},
+        //properties: {type: [Property]},
+        source: {type: GraphQLInt},
+        //terrains: {type: [Terrain]},
+        tilecount: {type: GraphQLInt},
+        source: {type: GraphQLString},
+        tiledversion: {type: GraphQLString},
+        tilerendersize: {type: GraphQLString},
+        //tiles: {type: [Tile]},
+        tilewidth: {type: GraphQLInt},
+        //transformations: {type: Transformation},
+        transparentcolor: {type: GraphQLString},
+        type: {type: GraphQLString},
+        version: {type: GraphQLString}
     })
 });
 
@@ -156,6 +156,43 @@ const mutation = new GraphQLObjectType({
                     {new: true},
                 );
             }
+        },
+
+        addTileset: {
+            type: TilesetType,
+            args:{
+                columns: {type: GraphQLInt},
+                image: {type: GraphQLString},
+                imageheight: {type: GraphQLInt},
+                imagewidth: {type: GraphQLID},
+                margin: {type: GraphQLInt},
+                name: {type: GraphQLString},
+                spacing: {type: GraphQLInt},
+                tilecount: {type: GraphQLInt},
+                tiledversion: {type: GraphQLString},
+                tileheight: {type: GraphQLInt},
+                tilewidth: {type: GraphQLInt},
+                type: {type: GraphQLString},
+                version: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                const tileset = new Tileset({
+                    columns: args.columns,
+                    image: args.image,
+                    imageheight: args.imageheight,
+                    imagewidth: args.imagewidth,
+                    margin: args.margin,
+                    name: args.name,
+                    spacing: args.spacing,
+                    tilecount: args.tilecount,
+                    tiledversion: args.tiledversion,
+                    tileheight: args.tileheight,
+                    tilewidth: args.tilewidth,
+                    type: args.type,
+                    version: args.version
+                });
+                return tileset.save();
+            }
         }
     }
 });
@@ -187,6 +224,12 @@ const RootQuery = new GraphQLObjectType({
             args: { id: {type: GraphQLID}},
             resolve(parent, args){
                 return Client.findById(args.id);
+            }
+        },
+        tilesets: {
+            type: TilesetType,
+            resolve(parent, args){
+                return Tileset.find();
             }
         }
     }
