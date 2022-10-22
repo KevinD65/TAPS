@@ -1,4 +1,3 @@
-const {projects, clients} = require('../sampleData.js');
 const Project = require("../models/Project");
 const Client = require('../models/Client');
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLBoolean, GraphQLFloat } = require('graphql');
@@ -26,6 +25,27 @@ const ProjectType = new GraphQLObjectType({
                 return Client.findById(parent.clientId);
             }
         }
+    })
+});
+const UserType = GraphQLObjectType({
+    name: 'User',
+    fields: () => ({
+        id: {type: GraphQLID},
+        hash: {type: GraphQLString},
+        username: {type: GraphQLString},
+        bio: {type: GraphQLString},
+    })
+});
+
+const ChunkType = GraphQLObjectType({
+    name: 'Chunk',
+    fields: () => ({
+        id: {type: GraphQLID},
+        data: {type: [GraphQLInt]},
+        height: {type: GraphQLInt},
+        width: {type: GraphQLInt},
+        x: {type: GraphQLInt},
+        y: {type: GraphQLInt},
     })
 });
 
