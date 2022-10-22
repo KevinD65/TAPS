@@ -1,7 +1,7 @@
 const {projects, clients} = require('../sampleData.js');
 const Project = require("../models/Project");
 const Client = require('../models/Client');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType } = require('graphql');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLBoolean, GraphQLFloat } = require('graphql');
 
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -59,6 +59,40 @@ const TilesetType = new GraphQLObjectType({
     })
 });
 
+const LayerType = new GraphQLObjectType({
+    name: 'Layer',
+    fields: () => ({
+         chunks: {type: [Chunk]},
+         class: {type: GraphQLString},
+         compression: {type: GraphQLString},
+         data: { type: [GraphQLInt]},
+         draworder: {type: GraphQLString},
+         encoding: {type: GraphQLString},
+         height: {type: GraphQLInt},
+         image: {type: GraphQLString},
+         layers: {type: [GraphQLFloat]},
+         locked: {type: GraphQLBoolean},
+         name: {type: GraphQLString},
+         objects: {type: [Object]},
+         offsetx: {type: GraphQLInt},
+         offsety: {type: GraphQLInt},
+         opacity: {type: GraphQLInt},
+         parallaxx: {type: GraphQLInt},
+         parallaxy: {type: GraphQLInt},
+         properties: {type: [Property]},
+         repeatx: {type: GraphQLInt},
+         repeaty: {type: GraphQLInt},
+         startx: {type: GraphQLInt},
+         starty: {type: GraphQLInt},
+         tintcolor: {type: GraphQLString},
+         transparentcolor: {type: GraphQLString},
+         type: {type: GraphQLString},
+         visible: {type: GraphQLBoolean},
+         width: {type: GraphQLInt},
+         x: {type: GraphQLInt},
+         y: {type: GraphQLInt}
+    })
+});
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
