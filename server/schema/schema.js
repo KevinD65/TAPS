@@ -1,7 +1,6 @@
-const {projects, clients} = require('../sampleData.js');
 const Project = require("../models/Project");
 const Client = require('../models/Client');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType } = require('graphql');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLFloat, GraphQLBoolean, GraphQLInt } = require('graphql');
 
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -58,6 +57,90 @@ const TilesetType = new GraphQLObjectType({
         version: {type: String}
     })
 });
+
+const MapType = new GraphQLObjectType({
+    name: 'Map',
+    fields: () => ({
+        backgroundColor: {
+            type: GraphQLString,
+        },
+        class: {
+            type: GraphQLString,
+        },
+        compressionLevel: {
+            type: GraphQLFloat,
+        },
+        height: {
+            type: GraphQLFloat,
+        },
+        hexSideLength: {
+            type: GraphQLFloat,
+        },
+        infinite: {
+            type: GraphQLBoolean,
+        },
+        layers: {
+            type: [Layer],
+        },
+        nextlayerid: {
+            type: GraphQLInt,
+        },
+        nextobjectid: {
+            type: GraphQLString,
+        },
+        orientation: {
+            type: GraphQLString,
+        },
+        parallaxOriginX: {
+            type: GraphQLString,
+        },
+        parallaxOriginY: {
+            type: GraphQLFloat,
+            
+        },
+        properties: {
+            type: [Property],
+            
+        },
+        renderorder: {
+            type: GraphQLString,
+        },
+        staggeraxis: {
+            type: GraphQLString,
+        },
+        staggerindex: {
+            type: GraphQLString,
+        },
+        tiledversion: {
+            type: GraphQLString,
+        },
+        tileheight: {
+            type: GraphQLFloat,
+            
+        },
+        tilesets: {
+            type: [Tileset] 
+            
+        },
+        tilewidth: {
+            type: GraphQLFloat,
+            
+        },
+        type: {
+            type: GraphQLString,
+            
+        },
+        version: {
+            type: GraphQLString,
+            
+        },
+        width: {
+            type: GraphQLFloat,
+            
+        }
+    })
+});
+
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
