@@ -1,6 +1,8 @@
 const Project = require("../models/Project");
 const Client = require('../models/Client');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt } = require('graphql');
+
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLBoolean, GraphQLFloat } = require('graphql');
+
 const Tileset = require("../models/Tileset.js");
 
 const ClientType = new GraphQLObjectType({
@@ -26,6 +28,27 @@ const ProjectType = new GraphQLObjectType({
                 return Client.findById(parent.clientId);
             }
         }
+    })
+});
+const UserType = new GraphQLObjectType({
+    name: 'User',
+    fields: () => ({
+        id: {type: GraphQLID},
+        hash: {type: GraphQLString},
+        username: {type: GraphQLString},
+        bio: {type: GraphQLString},
+    })
+});
+
+const ChunkType = new GraphQLObjectType({
+    name: 'Chunk',
+    fields: () => ({
+        id: {type: GraphQLID},
+        data: {type: [GraphQLInt]},
+        height: {type: GraphQLInt},
+        width: {type: GraphQLInt},
+        x: {type: GraphQLInt},
+        y: {type: GraphQLInt},
     })
 });
 
@@ -56,6 +79,126 @@ const TilesetType = new GraphQLObjectType({
         transparentcolor: {type: GraphQLString},
         type: {type: GraphQLString},
         version: {type: GraphQLString}
+    })
+});
+
+const MapType = new GraphQLObjectType({
+    name: 'Map',
+    fields: () => ({
+        backgroundColor: {
+            type: GraphQLString,
+        },
+        class: {
+            type: GraphQLString,
+        },
+        compressionLevel: {
+            type: GraphQLFloat,
+        },
+        height: {
+            type: GraphQLFloat,
+        },
+        hexSideLength: {
+            type: GraphQLFloat,
+        },
+        infinite: {
+            type: GraphQLBoolean,
+        },
+        layers: {
+            type: [Layer],
+        },
+        nextlayerid: {
+            type: GraphQLInt,
+        },
+        nextobjectid: {
+            type: GraphQLString,
+        },
+        orientation: {
+            type: GraphQLString,
+        },
+        parallaxOriginX: {
+            type: GraphQLString,
+        },
+        parallaxOriginY: {
+            type: GraphQLFloat,
+            
+        },
+        properties: {
+            type: [Property],
+            
+        },
+        renderorder: {
+            type: GraphQLString,
+        },
+        staggeraxis: {
+            type: GraphQLString,
+        },
+        staggerindex: {
+            type: GraphQLString,
+        },
+        tiledversion: {
+            type: GraphQLString,
+        },
+        tileheight: {
+            type: GraphQLFloat,
+            
+        },
+        tilesets: {
+            type: [Tileset] 
+            
+        },
+        tilewidth: {
+            type: GraphQLFloat,
+            
+        },
+        type: {
+            type: GraphQLString,
+            
+        },
+        version: {
+            type: GraphQLString,
+            
+        },
+        width: {
+            type: GraphQLFloat,
+            
+        }
+    })
+});
+
+
+
+const LayerType = new GraphQLObjectType({
+    name: 'Layer',
+    fields: () => ({
+         chunks: {type: [Chunk]},
+         class: {type: GraphQLString},
+         compression: {type: GraphQLString},
+         data: { type: [GraphQLInt]},
+         draworder: {type: GraphQLString},
+         encoding: {type: GraphQLString},
+         height: {type: GraphQLInt},
+         image: {type: GraphQLString},
+         layers: {type: [GraphQLFloat]},
+         locked: {type: GraphQLBoolean},
+         name: {type: GraphQLString},
+         objects: {type: [Object]},
+         offsetx: {type: GraphQLInt},
+         offsety: {type: GraphQLInt},
+         opacity: {type: GraphQLInt},
+         parallaxx: {type: GraphQLInt},
+         parallaxy: {type: GraphQLInt},
+         properties: {type: [Property]},
+         repeatx: {type: GraphQLInt},
+         repeaty: {type: GraphQLInt},
+         startx: {type: GraphQLInt},
+         starty: {type: GraphQLInt},
+         tintcolor: {type: GraphQLString},
+         transparentcolor: {type: GraphQLString},
+         type: {type: GraphQLString},
+         visible: {type: GraphQLBoolean},
+         width: {type: GraphQLInt},
+         x: {type: GraphQLInt},
+         y: {type: GraphQLInt}
     })
 });
 
