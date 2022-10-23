@@ -1,6 +1,7 @@
 const Project = require("../models/Project");
 const Client = require('../models/Client');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt } = require('graphql');
+const Tileset = require('../models/Tileset');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType } = require('graphql');
 
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -27,7 +28,7 @@ const ProjectType = new GraphQLObjectType({
         }
     })
 });
-const UserType = GraphQLObjectType({
+const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
         id: {type: GraphQLID},
@@ -36,8 +37,39 @@ const UserType = GraphQLObjectType({
         bio: {type: GraphQLString},
     })
 });
-
-const ChunkType = GraphQLObjectType({
+const TilesetInputType = new GraphQLInputObjectType({
+    name: "TileInput",
+    fields: {
+        backgroundcolor: {type: GraphQLString},
+        class: {type: GraphQLString},
+        columns: {type: GraphQLInt},
+        fillmode: {type: GraphQLString},
+        firstgid: {type: GraphQLInt},
+        //grid: {type: Grid},
+        image: {type: GraphQLString},
+        imageheight: {type: GraphQLInt},
+        imagewidth: {type: GraphQLInt},
+        margin: {type: GraphQLInt},
+        name: {type: GraphQLString},
+        objectalignment: {type: GraphQLString},
+        //properties: {type: [Property]},
+        spacing:{type: GraphQLInt},
+        source: {type: GraphQLInt},
+        //terrains: {type: [Terrain]},
+        tilecount: {type: GraphQLInt},
+        source: {type: GraphQLString},
+        tileheight: {type: GraphQLInt},
+        tiledversion: {type: GraphQLString},
+        tilerendersize: {type: GraphQLString},
+        //tiles: {type: [Tile]},
+        tilewidth: {type: GraphQLInt},
+        //transformations: {type: Transformation},
+        transparentcolor: {type: GraphQLString},
+        type: {type: GraphQLString},
+        version: {type: GraphQLString}
+    },
+});
+const ChunkType = new GraphQLObjectType({
     name: 'Chunk',
     fields: () => ({
         id: {type: GraphQLID},
@@ -52,36 +84,47 @@ const ChunkType = GraphQLObjectType({
 const TilesetType = new GraphQLObjectType({
     name: 'Tileset',
     fields: () => ({
-        backgroundcolor: {type: String},
-        class: {type: String},
-        columns: {type: number},
-        fillmode: {type: String},
-        firstgid: {type: Number},
+        backgroundcolor: {type: GraphQLString},
+        class: {type: GraphQLString},
+        columns: {type: GraphQLInt},
+        fillmode: {type: GraphQLString},
+        firstgid: {type: GraphQLInt},
         //grid: {type: Grid},
-        image: {type: String},
-        imageheight: {type: Number},
-        imagewidth: {type: Number},
-        margin: {type: Number},
-        objectalignment: {type: String},
-        properties: {type: [Property]},
-        source: {type: Number},
-        terrains: {type: [Terrain]},
-        tilecount: {type: Number},
-        source: {type: String},
-        tiledversion: {type: String},
-        tilerendersize: {type: String},
-        tiles: {type: [Tile]},
-        tilewidth: {type: Number},
-        transformations: {type: Transformation},
-        transparentcolor: {type: String},
-        type: {type: String},
-        version: {type: String}
+        image: {type: GraphQLString},
+        imageheight: {type: GraphQLInt},
+        imagewidth: {type: GraphQLInt},
+        margin: {type: GraphQLInt},
+        objectalignment: {type: GraphQLString},
+        //properties: {type: [Property]},
+        source: {type: GraphQLInt},
+        //terrains: {type: [Terrain]},
+        tilecount: {type: GraphQLInt},
+        source: {type: GraphQLString},
+        tiledversion: {type: GraphQLString},
+        tilerendersize: {type: GraphQLString},
+        //tiles: {type: [Tile]},
+        tilewidth: {type: GraphQLInt},
+        //transformations: {type: Transformation},
+        transparentcolor: {type: GraphQLString},
+        type: {type: GraphQLString},
+        version: {type: GraphQLString}
     })
 });
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
+        addTileSet:{
+            type: TilesetType,
+            args: {
+                TilesetInput: {type: TilesetInputType}
+            },
+            resolve(parent, args){
+                let input = args.TilesetInput;
+                const tileset = new Tileset(input);
+                return tileset.save();
+            }
+        },
         addClient:{
             type: ClientType,
             args: {
