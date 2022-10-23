@@ -1,9 +1,8 @@
 const Project = require("../models/Project");
 const Client = require('../models/Client');
+const Tileset = require('../models/Tileset');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType } = require('graphql');
 
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLBoolean, GraphQLFloat } = require('graphql');
-
-const Tileset = require("../models/Tileset.js");
 
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -38,6 +37,39 @@ const UserType = new GraphQLObjectType({
         username: {type: GraphQLString},
         bio: {type: GraphQLString},
     })
+});
+
+const TilesetInputType = new GraphQLInputObjectType({
+    name: "TileInput",
+    fields: {
+        backgroundcolor: {type: GraphQLString},
+        class: {type: GraphQLString},
+        columns: {type: GraphQLInt},
+        fillmode: {type: GraphQLString},
+        firstgid: {type: GraphQLInt},
+        //grid: {type: Grid},
+        image: {type: GraphQLString},
+        imageheight: {type: GraphQLInt},
+        imagewidth: {type: GraphQLInt},
+        margin: {type: GraphQLInt},
+        name: {type: GraphQLString},
+        objectalignment: {type: GraphQLString},
+        //properties: {type: [Property]},
+        spacing:{type: GraphQLInt},
+        source: {type: GraphQLInt},
+        //terrains: {type: [Terrain]},
+        tilecount: {type: GraphQLInt},
+        source: {type: GraphQLString},
+        tileheight: {type: GraphQLInt},
+        tiledversion: {type: GraphQLString},
+        tilerendersize: {type: GraphQLString},
+        //tiles: {type: [Tile]},
+        tilewidth: {type: GraphQLInt},
+        //transformations: {type: Transformation},
+        transparentcolor: {type: GraphQLString},
+        type: {type: GraphQLString},
+        version: {type: GraphQLString}
+    },
 });
 
 const ChunkType = new GraphQLObjectType({
@@ -79,6 +111,7 @@ const TilesetType = new GraphQLObjectType({
         transparentcolor: {type: GraphQLString},
         type: {type: GraphQLString},
         version: {type: GraphQLString}
+
     })
 });
 
@@ -199,12 +232,24 @@ const LayerType = new GraphQLObjectType({
          width: {type: GraphQLInt},
          x: {type: GraphQLInt},
          y: {type: GraphQLInt}
+
     })
 });
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
+        addTileSet:{
+            type: TilesetType,
+            args: {
+                TilesetInput: {type: TilesetInputType}
+            },
+            resolve(parent, args){
+                let input = args.TilesetInput;
+                const tileset = new Tileset(input);
+                return tileset.save();
+            }
+        },
         addClient:{
             type: ClientType,
             args: {
