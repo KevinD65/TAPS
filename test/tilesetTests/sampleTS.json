@@ -1,0 +1,15 @@
+{ 
+"columns": 5,
+ "image":"..\/OneDrive\/Documents\/lungo\/benchmark2\/dist\/lungo_assets\/tilemaps\/level1.png",
+ "imageheight":80,
+ "imagewidth":80,
+ "margin":0,
+ "name":"Level1",
+ "spacing":0,
+ "tilecount":25,
+ "tiledversion":"1.8.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.8"
+}
