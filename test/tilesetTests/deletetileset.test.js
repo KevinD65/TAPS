@@ -3,37 +3,48 @@ let tileset = require("./sampleTS.json");
 
 test("Delete Tileset", async () => {
     const newMap = {
-        "deleteUser": {
+        "deleteTileSet": 
+        {
             "image": "../OneDrive/Documents/lungo/benchmark2/dist/lungo_assets/tilemaps/level1.png"
         }
     };
 
-    let res = await fetch('https://taps-backend.herokuapp.com/graphql', {
+    const variables = { input: tileset };
+    console.log(`TilesetInput: ${JSON.stringify(variables)}`);
+
+    let res = await fetch('http://localhost:42069/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
-        `mutation{
+        `mutation($input: TileInput){
             addTileSet(TilesetInput: $input){
+              id,
               image,
             }
-          }` 
+          }`,
+          variables   
         })
     })
     .then(res => res.json())
     
-    let idnum = res.data.addTileSet.id;
 
-    return fetch('https://taps-backend.herokuapp.com/graphql', {
+    console.log(res)
+    let idnum = res.data.addTileSet.id;
+    console.log(idnum)
+
+
+
+    return fetch('http://localhost:42069/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `mutation{
-            deleteUser(id: "${idnum}"){
+            deleteTileSet(id: ${idnum}){
                 image,
             }
-          }` 
+          }`
         })
     })
     .then(res => res.json())
