@@ -89,6 +89,7 @@ const ChunkType = new GraphQLObjectType({
 const TilesetType = new GraphQLObjectType({
     name: 'Tileset',
     fields: () => ({
+        id: {type: GraphQLID},
         backgroundcolor: {type: GraphQLString},
         class: {type: GraphQLString},
         columns: {type: GraphQLInt},
@@ -277,6 +278,22 @@ const mutation = new GraphQLObjectType({
                 return tileset.save();
             }
         },
+
+        updateTileSet: {
+            type: TilesetType,
+            args:{
+                id: {type: GraphQLNonNull(GraphQLID)},
+                TilesetInput: {type: TilesetInputType}
+            },
+            async resolve(parent, args){
+                let input = args.TilesetInput;
+                const tileset = await Tileset.findByIdAndUpdate(
+                    args.id,
+                    { $set: input },
+                    {new: true},
+                );
+                return tileset;
+
         addMap:{
             type: MapType,
             args: {
@@ -286,6 +303,7 @@ const mutation = new GraphQLObjectType({
                 let input = args.MapInput;
                 const map = new Map(input);
                 return map.save();
+
             }
         },
         addClient:{
