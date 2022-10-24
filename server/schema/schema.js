@@ -1,6 +1,7 @@
 const Project = require("../models/Project");
 const Client = require('../models/Client');
 const Tileset = require('../models/Tileset');
+const User = require('../models/User');
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType } = require('graphql');
 
 const ClientType = new GraphQLObjectType({
@@ -37,6 +38,7 @@ const UserType = new GraphQLObjectType({
         bio: {type: GraphQLString},
     })
 });
+
 const TilesetInputType = new GraphQLInputObjectType({
     name: "TileInput",
     fields: {
@@ -114,6 +116,45 @@ const TilesetType = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
+        createUser:{
+            type: UserType,
+            args: {
+                username: {type: GraphQLString},
+                hash: {type: GraphQLString},
+                bio: { type: GraphQLString }
+            },
+            resolve(paren, args){
+                let user = new User({
+                    username: args.username,
+                    hash: args.hash,
+                    bio: args.bio,
+                });
+                return user.save();
+            }
+        },
+        updateUser:{
+            type: UserType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                newuser: {type: GraphQLString},
+                newhash: {type: GraphQLString},
+                newbio: { type: GraphQLString }
+            },
+            resolve(paren, args){
+                return User.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set: {
+                            username: args.newuser,
+                            hash: args.newhash,
+                            newbio: args.newbio,
+                        }
+                    },
+                    {new: true},
+                );
+            }
+
+        },
         addTileSet:{
             type: TilesetType,
             args: {
@@ -226,6 +267,20 @@ const mutation = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
+        users:{
+            type: GraphQLList(UserType),
+            resolve(parent, args){
+                return User.find();
+            }
+        },
+        getUser:{
+            type: GraphQLList(UserType),
+            args: {username: {type: GraphQLString}},
+            resolve(parent, args){
+                console.log(args.username);
+                return User.find({username: args.username});
+            }
+        },
         projects:{
             type: GraphQLList(ProjectType),
             resolve(parent, args){
