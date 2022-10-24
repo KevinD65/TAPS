@@ -293,7 +293,8 @@ const mutation = new GraphQLObjectType({
                     {new: true},
                 );
                 return tileset;
-
+            }
+        },
         addMap:{
             type: MapType,
             args: {
