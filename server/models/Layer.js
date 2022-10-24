@@ -1,6 +1,8 @@
-const LayerSchema = new Schema(
+const mongoose = require('mongoose');
+
+const LayerSchema = new mongoose.Schema(
     {
-         chunks: {type: [Chunk]},
+         //chunks: {type: [Chunk]},
          class: {type: String},
          compression: {type: String},
          data: { type: [Number]},
@@ -9,16 +11,16 @@ const LayerSchema = new Schema(
          height: {type: Number},
          id: {type: Number},
          image: {type: String},
-         layers: {type: [Number]},
+         //layers: {type: [Number]},
          locked: {type: Boolean},
          name: {type: String},
-         objects: {type: [Object]},
+         //objects: {type: [Object]},
          offsetx: {type: Number},
          offsety: {type: Number},
          opacity: {type: Number},
          parallaxx: {type: Number},
          parallaxy: {type: Number},
-         properties: {type: [Property]},
+         //properties: {type: [Property]},
          repeatx: {type: Number},
          repeaty: {type: Number},
          startx: {type: Number},
