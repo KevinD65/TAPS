@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {Layer, LayerSchema} = require("./Layer");
 const MapSchema = new mongoose.Schema({
     ownerID: {
         type: Number
@@ -21,10 +22,10 @@ const MapSchema = new mongoose.Schema({
     infinite: {
         type: Boolean,
     },
-    /*
+    
     layers: {
-        type: [Layer],
-    },*/
+        type: [LayerSchema],
+    },
     nextlayerid: {
         type: Number,
     },
