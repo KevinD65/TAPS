@@ -270,7 +270,8 @@ const mutation = new GraphQLObjectType({
                 let input = args.TilesetInput;
                 const tileset = new Tileset(input);
                 return tileset.save();
-            }
+            },
+            
         },
 
         updateTileSet: {
@@ -296,7 +297,6 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parent, args){
                 let input = args.MapInput;
-                //input.layers.forEach(l => l.parentmapID: );
                 const map = new Map(input);
                 map.layers.forEach(l => {
                     const layer = new Layer(l);
@@ -305,6 +305,56 @@ const mutation = new GraphQLObjectType({
                 });
                 console.log(map);
                 return map.save();
+            }
+        },
+        updateMap:{
+            type: MapType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                MapInput: {type: MapInputType}
+            },
+            async resolve(parent, args){
+                let input = args.MapInput;
+                const map = await Map.findByIdAndUpdate(
+                    args.id,
+                    { $set: input },
+                    {new: true},
+                );
+                return map;
+            }
+        },
+        updateLayer:{
+            type: LayerType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                LayerInput: {type: LayerInputType}
+            },
+            async resolve(parent, args){
+                let input = args.LayerInput;
+                const layer = await Layer.findByIdAndUpdate(
+                    args.id,
+                    { $set: input },
+                    {new: true},
+                );
+                return layer;
+            }
+        },
+        deleteMap:{
+            type: MapType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+            },
+            resolve(parent, args){
+                return Map.findByIdAndRemove(args.id);
+            }
+        },
+        deleteLayer:{
+            type: LayerType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+            },
+            resolve(parent, args){
+                return Layer.findByIdAndRemove(args.id);
             }
         },
         addClient:{
