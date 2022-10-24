@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+Schema = mongoose.Schema;
 
 const LayerSchema = new mongoose.Schema(
     {
          //chunks: {type: [Chunk]},
+         parentid: { type: Schema.Types.ObjectId },
          class: {type: String},
          compression: {type: String},
          data: { type: [Number]},
@@ -34,3 +36,6 @@ const LayerSchema = new mongoose.Schema(
          y: {type: Number}
     }
 )
+
+const Layer = mongoose.model("Layer", LayerSchema);
+module.exports = {Layer, LayerSchema};

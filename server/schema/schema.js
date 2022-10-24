@@ -3,7 +3,7 @@ const Client = require('../models/Client');
 const Tileset = require('../models/Tileset');
 const User = require('../models/User');
 const Map = require('../models/Map');
-const Layer = require('../models/Layer');
+const {Layer, LayerSchema} = require('../models/Layer');
 const LayerInputType = require("./types/LayerInputType");
 const TilesetInputType = require("./types/TilesetInputType");
 
@@ -97,7 +97,7 @@ const LayerType = new GraphQLObjectType({
     fields: () => ({
          //chunks: {type: [Chunk]},
          id: {type: GraphQLID},
-         parentmapID: {type: GraphQLID},
+         parentID: {type: GraphQLID},
          class: {type: GraphQLString},
          compression: {type: GraphQLString},
          data: { type: GraphQLList(GraphQLInt)},
@@ -149,7 +149,7 @@ const MapType = new GraphQLObjectType({
         layers: {
             type: GraphQLList(LayerType),
             resolve(parent, args){
-                return Layer.find({parentmapID: parent.id});
+                return Layer.find({parentID: parent.id});
             }
         },
 
@@ -164,7 +164,7 @@ const MapType = new GraphQLObjectType({
         staggerindex: {type: GraphQLString},
         tiledversion: {type: GraphQLString},
         tileheight: {type: GraphQLFloat},
-        //tilesets: {type: [TilesetType]},
+        tilesets: {type: GraphQLList(TilesetType)},
         tilewidth: {type: GraphQLFloat},
         type: { type: GraphQLString},
         version: {type: GraphQLString},
@@ -181,6 +181,7 @@ const MapInputType = new GraphQLInputObjectType({
     name: "MapInput",
     fields: () => ({
         id: {type: GraphQLID},
+        compressionlevel: {type: GraphQLInt},
         ownerID: {type: GraphQLInt},
         backgroundColor: {type: GraphQLString},
         class: {type: GraphQLString},
@@ -190,7 +191,7 @@ const MapInputType = new GraphQLInputObjectType({
         infinite: {type: GraphQLBoolean},
         layers: {type: GraphQLList(LayerInputType)},
         nextlayerid: {type: GraphQLInt},
-        nextobjectid: {type: GraphQLString},
+        nextobjectid: {type: GraphQLInt},
         orientation: {type: GraphQLString},
         parallaxOriginX: {type: GraphQLString},
         parallaxOriginY: {type: GraphQLFloat},
@@ -200,7 +201,7 @@ const MapInputType = new GraphQLInputObjectType({
         staggerindex: {type: GraphQLString},
         tiledversion: {type: GraphQLString},
         tileheight: {type: GraphQLFloat},
-        //tilesets: {type: [TilesetType]},
+        tilesets: {type: GraphQLList(TilesetInputType)},
         tilewidth: {type: GraphQLFloat},
         type: { type: GraphQLString},
         version: {type: GraphQLString},
@@ -295,9 +296,15 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parent, args){
                 let input = args.MapInput;
+                //input.layers.forEach(l => l.parentmapID: );
                 const map = new Map(input);
+                map.layers.forEach(l => {
+                    const layer = new Layer(l);
+                    layer.parentid = map._id;
+                    layer.save();
+                });
+                console.log(map);
                 return map.save();
-
             }
         },
         addClient:{
