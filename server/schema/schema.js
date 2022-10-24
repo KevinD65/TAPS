@@ -122,8 +122,6 @@ const TilesetType = new GraphQLObjectType({
     })
 });
 
-
-
 const LayerType = new GraphQLObjectType({
     name: 'Layer',
     fields: () => ({
@@ -164,6 +162,7 @@ const LayerType = new GraphQLObjectType({
 
 
 
+
 const MapType = new GraphQLObjectType({
     name: 'Map',
     fields: () => ({
@@ -175,6 +174,7 @@ const MapType = new GraphQLObjectType({
         height: {type: GraphQLFloat},
         hexSideLength: {type: GraphQLFloat},
         infinite: {type: GraphQLBoolean},
+
         
         layers: {
             type: GraphQLList(LayerType),
@@ -182,7 +182,7 @@ const MapType = new GraphQLObjectType({
                 return Layer.find({parentmapID: parent.id});
             }
         },
-        
+
         nextlayerid: {type: GraphQLInt},
         nextobjectid: {type: GraphQLString},
         orientation: {type: GraphQLString},
@@ -201,6 +201,11 @@ const MapType = new GraphQLObjectType({
         width: {type: GraphQLFloat}
     })
 });
+
+
+/**
+ * Map GraphQLObject Input Type
+ */
 
 const MapInputType = new GraphQLInputObjectType({
     name: "MapInput",
@@ -275,7 +280,6 @@ const mutation = new GraphQLObjectType({
                     {new: true},
                 );
             }
-
         },
         deleteUser:{
             type: UserType,
