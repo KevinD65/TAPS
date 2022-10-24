@@ -41,5 +41,5 @@ test("Delete User", async () => {
     })
     .then(res => res.json())
     // The test condition itself2
-    .then(res => expect(res.data).toStrictEqual(newMap));
+    .then(res => expect(res.data).toEqual(newMap));
 })

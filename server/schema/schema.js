@@ -290,6 +290,16 @@ const mutation = new GraphQLObjectType({
                 return tileset;
             }
         },
+        deleteTileSet:{
+            type: TilesetType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+
+            },
+            resolve(parent, args){
+                return Tileset.findByIdAndRemove(args.id);
+            }
+        },
         addMap:{
             type: MapType,
             args: {
