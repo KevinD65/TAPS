@@ -447,6 +447,13 @@ const RootQuery = new GraphQLObjectType({
                 return Tileset.find();
             }
         },
+        getTileset: {
+            type: TilesetType,
+            args: { id: {type: GraphQLID}},
+            resolve(parent, args){
+                return Tileset.findById(args.id);
+            }
+        },
         getOwnerMaps: {
             type: GraphQLList(MapType),
             args: {ownerID: {type: GraphQLInt}},
