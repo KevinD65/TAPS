@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const MapSchema = new mongoose.Schema({
+    ownerID: {
+        type: Number
+    },
     backgroundColor: {
         type: String,
     },
@@ -18,9 +21,10 @@ const MapSchema = new mongoose.Schema({
     infinite: {
         type: Boolean,
     },
+    /*
     layers: {
         type: [Layer],
-    },
+    },*/
     nextlayerid: {
         type: Number,
     },
@@ -36,11 +40,11 @@ const MapSchema = new mongoose.Schema({
     parallaxOriginY: {
         type: Number,
         
-    },
+    },/*
     properties: {
         type: [Property],
         
-    },
+    },*/
     renderorder: {
         type: String,
     },
@@ -56,11 +60,11 @@ const MapSchema = new mongoose.Schema({
     tileheight: {
         type: Number,
         
-    },
+    },/*
     tilesets: {
         type: [Tileset] 
         
-    },
+    },*/
     tilewidth: {
         type: Number,
         
