@@ -279,6 +279,15 @@ const mutation = new GraphQLObjectType({
             }
 
         },
+        deleteUser:{
+            type: UserType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+            },
+            resolve(paren, args){
+                return User.findByIdAndRemove(args.id);
+            }
+        },
         addTileSet:{
             type: TilesetType,
             args: {
