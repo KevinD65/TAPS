@@ -2,7 +2,8 @@ const Project = require("../models/Project");
 const Client = require('../models/Client');
 const Tileset = require('../models/Tileset');
 const User = require('../models/User');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType } = require('graphql');
+const Map = require('../models/Map');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean } = require('graphql');
 
 
 const ClientType = new GraphQLObjectType({
@@ -119,83 +120,30 @@ const TilesetType = new GraphQLObjectType({
 const MapType = new GraphQLObjectType({
     name: 'Map',
     fields: () => ({
-        backgroundColor: {
-            type: GraphQLString,
-        },
-        class: {
-            type: GraphQLString,
-        },
-        compressionLevel: {
-            type: GraphQLFloat,
-        },
-        height: {
-            type: GraphQLFloat,
-        },
-        hexSideLength: {
-            type: GraphQLFloat,
-        },
-        infinite: {
-            type: GraphQLBoolean,
-        },
-        layers: {
-            type: [Layer],
-        },
-        nextlayerid: {
-            type: GraphQLInt,
-        },
-        nextobjectid: {
-            type: GraphQLString,
-        },
-        orientation: {
-            type: GraphQLString,
-        },
-        parallaxOriginX: {
-            type: GraphQLString,
-        },
-        parallaxOriginY: {
-            type: GraphQLFloat,
-            
-        },
-        properties: {
-            type: [Property],
-            
-        },
-        renderorder: {
-            type: GraphQLString,
-        },
-        staggeraxis: {
-            type: GraphQLString,
-        },
-        staggerindex: {
-            type: GraphQLString,
-        },
-        tiledversion: {
-            type: GraphQLString,
-        },
-        tileheight: {
-            type: GraphQLFloat,
-            
-        },
-        tilesets: {
-            type: [Tileset] 
-            
-        },
-        tilewidth: {
-            type: GraphQLFloat,
-            
-        },
-        type: {
-            type: GraphQLString,
-            
-        },
-        version: {
-            type: GraphQLString,
-            
-        },
-        width: {
-            type: GraphQLFloat,
-            
-        }
+        ownerID: {type: GraphQLInt},
+        backgroundColor: {type: GraphQLString},
+        class: {type: GraphQLString},
+        compressionLevel: {type: GraphQLFloat},
+        height: {type: GraphQLFloat},
+        hexSideLength: {type: GraphQLFloat},
+        infinite: {type: GraphQLBoolean},
+        //layers: {type: [LayerType]},
+        nextlayerid: {type: GraphQLInt},
+        nextobjectid: {type: GraphQLString},
+        orientation: {type: GraphQLString},
+        parallaxOriginX: {type: GraphQLString},
+        parallaxOriginY: {type: GraphQLFloat},
+        //properties: {type: [Property]},
+        renderorder: {type: GraphQLString},
+        staggeraxis: {type: GraphQLString},
+        staggerindex: {type: GraphQLString},
+        tiledversion: {type: GraphQLString},
+        tileheight: {type: GraphQLFloat},
+        //tilesets: {type: [TilesetType]},
+        tilewidth: {type: GraphQLFloat},
+        type: { type: GraphQLString},
+        version: {type: GraphQLString},
+        width: {type: GraphQLFloat}
     })
 });
 
@@ -235,6 +183,36 @@ const LayerType = new GraphQLObjectType({
          y: {type: GraphQLInt}
 
     })
+});
+
+const MapInputType = new GraphQLInputObjectType({
+    name: "MapInput",
+    fields: {
+        ownerID: {type: GraphQLInt},
+        backgroundColor: {type: GraphQLString},
+        class: {type: GraphQLString},
+        compressionLevel: {type: GraphQLFloat},
+        height: {type: GraphQLFloat},
+        hexSideLength: {type: GraphQLFloat},
+        infinite: {type: GraphQLBoolean},
+        //layers: {type: [LayerType]},
+        nextlayerid: {type: GraphQLInt},
+        nextobjectid: {type: GraphQLString},
+        orientation: {type: GraphQLString},
+        parallaxOriginX: {type: GraphQLString},
+        parallaxOriginY: {type: GraphQLFloat},
+        //properties: {type: [Property]},
+        renderorder: {type: GraphQLString},
+        staggeraxis: {type: GraphQLString},
+        staggerindex: {type: GraphQLString},
+        tiledversion: {type: GraphQLString},
+        tileheight: {type: GraphQLFloat},
+        //tilesets: {type: [TilesetType]},
+        tilewidth: {type: GraphQLFloat},
+        type: { type: GraphQLString},
+        version: {type: GraphQLString},
+        width: {type: GraphQLFloat}
+    }
 });
 
 const mutation = new GraphQLObjectType({
@@ -297,6 +275,17 @@ const mutation = new GraphQLObjectType({
                 let input = args.TilesetInput;
                 const tileset = new Tileset(input);
                 return tileset.save();
+            }
+        },
+        addMap:{
+            type: MapType,
+            args: {
+                MapInput: {type: MapInputType}
+            },
+            resolve(parent, args){
+                let input = args.MapInput;
+                const map = new Map(input);
+                return map.save();
             }
         },
         addClient:{
@@ -394,43 +383,6 @@ const mutation = new GraphQLObjectType({
                 );
             }
         },
-
-        addTileset: {
-            type: TilesetType,
-            args:{
-                columns: {type: GraphQLInt},
-                image: {type: GraphQLString},
-                imageheight: {type: GraphQLInt},
-                imagewidth: {type: GraphQLID},
-                margin: {type: GraphQLInt},
-                name: {type: GraphQLString},
-                spacing: {type: GraphQLInt},
-                tilecount: {type: GraphQLInt},
-                tiledversion: {type: GraphQLString},
-                tileheight: {type: GraphQLInt},
-                tilewidth: {type: GraphQLInt},
-                type: {type: GraphQLString},
-                version: {type: GraphQLString}
-            },
-            resolve(parent, args){
-                const tileset = new Tileset({
-                    columns: args.columns,
-                    image: args.image,
-                    imageheight: args.imageheight,
-                    imagewidth: args.imagewidth,
-                    margin: args.margin,
-                    name: args.name,
-                    spacing: args.spacing,
-                    tilecount: args.tilecount,
-                    tiledversion: args.tiledversion,
-                    tileheight: args.tileheight,
-                    tilewidth: args.tilewidth,
-                    type: args.type,
-                    version: args.version
-                });
-                return tileset.save();
-            }
-        }
     }
 });
 
@@ -478,9 +430,22 @@ const RootQuery = new GraphQLObjectType({
             }
         },
         tilesets: {
-            type: TilesetType,
+            type: GraphQLList(TilesetType),
             resolve(parent, args){
                 return Tileset.find();
+            }
+        },
+        getOwnerMaps: {
+            type: GraphQLList(MapType),
+            args: {ownerID: {type: GraphQLInt}},
+            resolve(parent, args){
+                return Map.find({ownerID: args.ownerID});
+            }
+        },
+        getMaps: {
+            type: GraphQLList(MapType),
+            resolve(parent, args){
+                return Map.find();
             }
         }
     }
