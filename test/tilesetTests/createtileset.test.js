@@ -28,5 +28,5 @@ test("Create Tileset", () => {
     })
     .then(res => res.json())
     // The test condition itself
-    .then(res => expect(res.data).toStrictEqual(expected));
+    .then(res => expect(res.data).toEqual(expected));
 })

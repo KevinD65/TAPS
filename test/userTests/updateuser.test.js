@@ -24,7 +24,7 @@ test("Update User", async () => {
         })
     })
     .then(res => res.json())
-    .then(res => expect(res.data).toStrictEqual(newUser));
+    .then(res => expect(res.data).toEqual(newUser));
 
     await fetch('http://localhost:42069/graphql', {
     method: 'POST',

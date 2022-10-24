@@ -1,11 +1,10 @@
 require('isomorphic-fetch');
+let tileset = require("./sampleTS.json");
 
-test("Delete User", async () => {
+test("Delete Tileset", async () => {
     const newMap = {
         "deleteUser": {
-            "username": "To be deleted",
-            "hash": "4567",
-            "bio": "Software Engineer"
+            "image": "../OneDrive/Documents/lungo/benchmark2/dist/lungo_assets/tilemaps/level1.png"
         }
     };
 
@@ -15,15 +14,15 @@ test("Delete User", async () => {
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `mutation{
-            createUser(username: "To be deleted", hash: "4567", bio: "Software Engineer"){
-              id,
+            addTileSet(TilesetInput: $input){
+              image,
             }
           }` 
         })
     })
     .then(res => res.json())
     
-    let idnum = res.data.createUser.id;
+    let idnum = res.data.addTileSet.id;
 
     return fetch('https://taps-backend.herokuapp.com/graphql', {
     method: 'POST',
@@ -32,9 +31,7 @@ test("Delete User", async () => {
     body: JSON.stringify({ query: 
         `mutation{
             deleteUser(id: "${idnum}"){
-              username,
-              hash,
-              bio,
+                image,
             }
           }` 
         })

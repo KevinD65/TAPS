@@ -25,5 +25,5 @@ test("Create User", () => {
     })
     .then(res => res.json())
     // The test condition itself
-    .then(res => expect(res.data).toStrictEqual(newMap));
+    .then(res => expect(res.data).toEqual(newMap));
 })

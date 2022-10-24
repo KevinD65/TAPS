@@ -1,7 +1,7 @@
 require('isomorphic-fetch');
 let tileset = require("./sampleTS.json");
 
-test("Get User", () => {
+test("Get Tileset", () => {
     const expected = {
         "getTileset": 
             {
@@ -19,8 +19,7 @@ test("Get User", () => {
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `{
-            getTileset(_id: "6355c0ac01c51ccdc0256da6
-            ") {
+            getTileset(id: "6355c0ac01c51ccdc0256da6") {
               image,
             }
           }` 
@@ -28,5 +27,5 @@ test("Get User", () => {
     })
     .then(res => res.json())
     // The test condition itself
-    .then(res => expect(res.data).toStrictEqual(expected));
+    .then(res => expect(res.data).toEqual(expected));
 })
