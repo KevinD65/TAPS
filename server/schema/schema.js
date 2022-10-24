@@ -5,6 +5,7 @@ const User = require('../models/User');
 const Map = require('../models/Map');
 const Layer = require('../models/Layer');
 const LayerInputType = require("./types/LayerInputType");
+const TilesetInputType = require("./types/TilesetInputType");
 
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
 
@@ -45,38 +46,7 @@ const UserType = new GraphQLObjectType({
     })
 });
 
-const TilesetInputType = new GraphQLInputObjectType({
-    name: "TileInput",
-    fields: {
-        backgroundcolor: {type: GraphQLString},
-        class: {type: GraphQLString},
-        columns: {type: GraphQLInt},
-        fillmode: {type: GraphQLString},
-        firstgid: {type: GraphQLInt},
-        //grid: {type: Grid},
-        image: {type: GraphQLString},
-        imageheight: {type: GraphQLInt},
-        imagewidth: {type: GraphQLInt},
-        margin: {type: GraphQLInt},
-        name: {type: GraphQLString},
-        objectalignment: {type: GraphQLString},
-        //properties: {type: [Property]},
-        spacing:{type: GraphQLInt},
-        source: {type: GraphQLInt},
-        //terrains: {type: [Terrain]},
-        tilecount: {type: GraphQLInt},
-        source: {type: GraphQLString},
-        tileheight: {type: GraphQLInt},
-        tiledversion: {type: GraphQLString},
-        tilerendersize: {type: GraphQLString},
-        //tiles: {type: [Tile]},
-        tilewidth: {type: GraphQLInt},
-        //transformations: {type: Transformation},
-        transparentcolor: {type: GraphQLString},
-        type: {type: GraphQLString},
-        version: {type: GraphQLString}
-    },
-});
+
 
 const ChunkType = new GraphQLObjectType({
     name: 'Chunk',
@@ -274,7 +244,7 @@ const mutation = new GraphQLObjectType({
                         $set: {
                             username: args.newuser,
                             hash: args.newhash,
-                            newbio: args.newbio,
+                            bio: args.newbio,
                         }
                     },
                     {new: true},
