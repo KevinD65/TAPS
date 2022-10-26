@@ -15,6 +15,7 @@ function App() {
       </Routes>
       <Navbar/>
       <Routes>
+
         <Route path='/userAsset' element={<UserAsset />}/>
         <Route path='/userProfile' element={<UserProfile />}/>
         <Route path='/community' element={<Community />}/>

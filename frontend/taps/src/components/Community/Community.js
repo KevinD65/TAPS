@@ -36,6 +36,7 @@ const Community = () => {
     }
 
     return (
+
         <div className='Community'>
             <Searchbar executeSearch={executeSearch}/>
             <div id='community-screen-container'>
@@ -63,8 +64,11 @@ const Community = () => {
                 </div>
 
             </div>
+
         </div>
     )
 }
 
+
 export default Community;
+
