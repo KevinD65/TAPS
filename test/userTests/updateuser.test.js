@@ -9,7 +9,7 @@ test("Update User", async () => {
         }
     };
 
-    await fetch('http://localhost:42069/graphql', {
+    await fetch('https://taps-backend.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
@@ -26,7 +26,7 @@ test("Update User", async () => {
     .then(res => res.json())
     .then(res => expect(res.data).toEqual(newUser));
 
-    await fetch('http://localhost:42069/graphql', {
+    await fetch('https://taps-backend.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
