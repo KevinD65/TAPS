@@ -14,8 +14,11 @@ function App() {
     <div>
       <Navbar/>
       <Routes>
+        
         <Route path='/login' element={<Login />}/>
-        <Route path='/userAsset' element={<UserAsset />}/>
+        <Route path='/userAsset' element={<UserAsset />}>
+          
+        </Route>
         <Route path='/userProfile' element={<UserProfile />}/>
         <Route path='/community' element={<Community />}/>
         

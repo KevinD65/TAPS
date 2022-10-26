@@ -7,8 +7,18 @@ const UserProfile = () => {
     return (
         <div className='user-profile'>
             <h1>User profile</h1>
+            <h1>User profile</h1>
+            <h1>User profile</h1>
+            <h1>User profile</h1>
+            <h1>User profile</h1>
+            <h1>User profile</h1>
+            
+            
+            
         </div>
     )
 }
 
 export default UserProfile
+
+
