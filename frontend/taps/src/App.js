@@ -7,21 +7,18 @@ import UserProfile from "./components/User/UserProfile"
 import Community from "./components/Community/Community"
 import Navbar from "./components/Navbar"
 
-
-
 function App() {
   return (
-    <div>
+    <div id='screen'>
+      <Routes>
+        <Route path='/' element={<Login />}/>
+      </Routes>
       <Navbar/>
       <Routes>
-        
-        <Route path='/login' element={<Login />}/>
-        <Route path='/userAsset' element={<UserAsset />}>
-          
-        </Route>
+
+        <Route path='/userAsset' element={<UserAsset />}/>
         <Route path='/userProfile' element={<UserProfile />}/>
         <Route path='/community' element={<Community />}/>
-        
       </Routes>
     </div>
     

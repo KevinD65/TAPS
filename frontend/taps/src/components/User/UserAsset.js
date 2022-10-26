@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,6 +22,7 @@ import Tileset from "./Tileset"
 
 const drawerWidth = 240;
 const dummyData=[{name:"waterfall" ,image:"something.svg", owner:"abcd", type:"map",starred:0},{name:"waterfall 1" ,image:"something.svg", owner:"abcd1", type:"map",starred:1},{name:"mountain" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:0},{name:"soil" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:1}]
+
 
 export default function UserAsset() {
   return (
@@ -78,6 +80,7 @@ export default function UserAsset() {
       
       
 
+
       
       
         
@@ -103,4 +106,4 @@ export default function UserAsset() {
       
     </Box>
   );
-}
+
