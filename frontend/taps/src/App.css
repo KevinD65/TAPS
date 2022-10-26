@@ -1,7 +1,22 @@
-.App {
-  text-align: center;
+:root{
+  --standard-beige: rgb(200, 173, 126);
+  --very-light-beige: rgb(244, 235, 208);
+  --light-beige: rgb(209,192,168);
+  --medium-beige: rgb(191,170,140);
+
+  --standard-font:'Lexend';
 }
 
+html, body, #root {
+  height: 100%;
+}
+
+#screen{
+  height: 100vh;
+}
+
+
+/**
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +50,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+}**/

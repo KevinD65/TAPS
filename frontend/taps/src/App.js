@@ -1,18 +1,17 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-
-
+import Login from './components/Account/Login';
 
 function App() {
   return (
-    <div>
+    <div id='screen'>
       <Routes>
-        <Route path='/login' element={<Login />}/>
+        <Route path='/' element={<Login />}/>
+        {/*
         <Route path='/userAsset' element={<UserAsset />}/>
         <Route path='/userProfile' element={<UserProfile />}/>
-        <Route path='/community' element={<Community />}/>
+        <Route path='/community' element={<Community />}/>*/}
       </Routes>
     </div>
     
