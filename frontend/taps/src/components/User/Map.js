@@ -6,11 +6,19 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Waterfall from "../../static/waterfall.svg"
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import {useNavigate} from "react-router-dom"
 
-const Map=(props)=> {
-  console.log(props.mapData)
+
+
+const Map=({mapName})=> {
+  console.log(mapName)
+  const navigate= useNavigate();
   return (
-    <Card sx={{ minWidth: 230  ,ml:3, mr:3, mt:5}}>
+    <Card sx={{ width:250  ,ml:3, mr:3, mt:1 }}
+    onDoubleClick={()=>{
+      navigate('/MapEditor');
+    }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
@@ -23,7 +31,7 @@ const Map=(props)=> {
           <Typography gutterBottom variant="h6" component="div">
             <MapOutlinedIcon></MapOutlinedIcon>
             
-          Dummy Map
+          {mapName}
           </Typography>
           
         </CardContent>

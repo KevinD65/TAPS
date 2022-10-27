@@ -12,96 +12,65 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Button } from '@mui/material';
+import { Button,Grid,Popover } from '@mui/material';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import Map from "./Map"
 import Tileset from "./Tileset"
+import { useState } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Sidemenu from './Sidemenu';
 
-const drawerWidth = 240;
-const dummyData=[{name:"waterfall" ,image:"something.svg", owner:"abcd", type:"map",starred:0},{name:"waterfall 1" ,image:"something.svg", owner:"abcd1", type:"map",starred:1},{name:"mountain" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:0},{name:"soil" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:1}]
+
+const dummyData=[{name:"waterfall" ,image:"something.svg", owner:"abcd", type:"map",starred:0},{name:"Mario " ,image:"something.svg", owner:"abcd", type:"map",starred:0},{name:"My city" ,image:"something.svg", owner:"abcd1", type:"map",starred:1},{name:"mountain" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:0},{name:"soil" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:1}]
 
 export default function UserAsset() {
+  
   return (
-    <Box sx={{ display: 'flex' }}>
+<Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      
-      <Drawer
-        
-        variant="permanent"
-        sx={{
-            
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-        }}
-      >
-        
-        <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-        
-          <List>
-          <Box textAlign='center'>
-  <Button variant='contained' sx={{marginTop:3, marginBottom:3, pr:4, pl:4, }}>
-  <Typography variant="h3" component="h2">
-  +
-</Typography>
-<Typography variant="h6" component="h2">
-&nbsp; New
-</Typography>
-  </Button>
-</Box>
-<Divider />
+      <Sidemenu/> 
          
-            {[{name:'All', icon:<InboxIcon/>}, {name:'Maps', icon:<MapOutlinedIcon/>}, {name:'Tiles', icon:<GridViewOutlinedIcon/>}, {name:'Starred', icon:<StarBorderIcon/>}, {name:'Shared with me', icon:<FolderSharedOutlinedIcon/>}].map((text, index) => (
-              <ListItem key={text.name} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {text.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={text.name} />
-                 
-                  
-                </ListItemButton>
-                
-              </ListItem>
-              
-            ))}
-             <Divider />
-          </List>
-          
-          
-          
-        </Box>
-      </Drawer>
+<Grid container direction="row">
 
-      
-      
 
+<Typography variant="h6" sx={{mt:4, ml:4, fontWeight:700}} >Maps <hr/></Typography>
+{/* This arranges the mapped data items in a grid  */}
+    <Grid container>
       
-      
-        
       {dummyData.map((data)=>{
-                if (data.type=="map"){
-                    
-                   return<Map mapdata={data.name}/>
-                    
-                }
-        })}
-        
-        
-        {dummyData.map((data)=>{
-                if (data.type=="tiles"){
-                    
-                   return<Tileset mapdata={data.name}/>
-                    
-                }
-        })}
-        
-        
-    
+            if (data.type=="map"){
+                
+                return(
+                <Grid  item md={3} >
+                <Map mapName={data.name}/>
+                </Grid>
+            )}
+                  })}
+    </Grid>
+
+
+  <Typography variant="h6" sx={{mt:4, ml:4, fontWeight:700}}  >Tilesets <hr/></Typography>
+    <Grid container   >
+      {dummyData.map((data)=>{
+            if (data.type=="tiles"){
+                  
+                return(
+                <Grid item  md={3} >
+                <Tileset  tileName={data.name}/>
+                
+                </Grid>
+      )}
+                      })}
+  
+    </Grid>
+
+  </Grid>
       
-    </Box>
+</Box>
+    
   );
 }
+
