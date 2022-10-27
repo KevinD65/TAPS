@@ -6,11 +6,18 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Waterfall from "../../static/waterfall.svg"
 import GridViewOutlined from '@mui/icons-material/GridViewOutlined';
+import {useNavigate} from "react-router-dom"
 
-const Tileset=(props)=> {
-  console.log(props.mapData)
+const Tileset=({tileName})=> {
+  console.log(tileName)
+  const navigate= useNavigate();
+  
   return (
-    <Card sx={{ minWidth: 230  ,ml:3, mr:3, mt:5}}>
+    <Card sx={{ minWidth: 230  ,ml:3, mr:3, }}
+    onDoubleClick={()=>{
+      navigate('/TileEditor');
+    }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
@@ -23,7 +30,7 @@ const Tileset=(props)=> {
           <Typography gutterBottom variant="h6" component="div">
             <GridViewOutlined></GridViewOutlined>
             
-          Dummy Tile
+          {tileName}
           </Typography>
           
         </CardContent>

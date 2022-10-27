@@ -14,7 +14,6 @@ const Community = () => {
      const executeSearch = async(input) => {
         //alert(input);
         let recentSearchesCopy = [...recentSearches];
-
         //IF THE ITEM BEING SEARCHED FOR IS IN THE RECENT, BRING IT TO THE TOP IN RECENT SEARCH LIST
         if(recentSearchesCopy.includes(input)){
             let bringToTop = recentSearches.indexOf(input);
@@ -36,7 +35,6 @@ const Community = () => {
     }
 
     return (
-
         <div className='Community'>
             <Searchbar executeSearch={executeSearch}/>
             <div id='community-screen-container'>
@@ -64,7 +62,6 @@ const Community = () => {
                 </div>
 
             </div>
-
         </div>
     )
 }
