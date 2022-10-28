@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./mapEdit.css"
-
+import Grass from "../../static/grass.jpeg"
 
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
@@ -9,17 +9,19 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
 const Pixel = () => {
    
-   const [pixelColor, setPixelColor]= useState("#4287f5")
+   const [pixelColor, setPixelColor]= useState("Gray")
    let pixels=[]
    let changeColor=()=>{
-    setPixelColor("#000000")
+    setPixelColor(
+        `url(${Grass})`
+    )
     console.log("entered")
 
    }
    
 
     return(
-        <div className="pixel"  onClick={changeColor}  style={{backgroundColor:pixelColor}}></div>
+        <div className="pixel"  onClick={changeColor}  style={{backgroundColor:"#3248a8"  ,  backgroundImage:pixelColor}}></div>
     )
 }
 
