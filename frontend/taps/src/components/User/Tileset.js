@@ -7,6 +7,9 @@ import { CardActionArea } from '@mui/material';
 import Waterfall from "../../static/waterfall.svg"
 import GridViewOutlined from '@mui/icons-material/GridViewOutlined';
 import {useNavigate} from "react-router-dom"
+import Checkbox from '@mui/material/Checkbox';
+import StarBorder from '@mui/icons-material/StarBorder';
+import Star from '@mui/icons-material/Star';
 
 const Tileset=({tileName})=> {
   console.log(tileName)
@@ -25,13 +28,13 @@ const Tileset=({tileName})=> {
           image={Waterfall}
           alt="map"
         />
-        <CardContent>
-          
-          <Typography gutterBottom variant="h6" component="div">
-            <GridViewOutlined></GridViewOutlined>
-            
-          {tileName}
-          </Typography>
+        <CardContent sx={{display:'flex' }}>
+        <GridViewOutlined sx={{mt:1}}></GridViewOutlined>
+          <Typography gutterBottom sx={{fontSize:"1.2rem",mt:1,ml:1}} component="div"> {tileName} </Typography>
+          <Checkbox  aria-label='Checkbox demo'
+              icon={<StarBorder />} 
+              checkedIcon={<Star />} 
+              sx={{ boxShadow: 0.5 , ml:'auto'}}/>
           
         </CardContent>
       </CardActionArea>

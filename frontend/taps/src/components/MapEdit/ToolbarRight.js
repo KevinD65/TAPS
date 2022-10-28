@@ -16,13 +16,14 @@ import { Button,} from '@mui/material';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
-import Map from "./Map"
-import Tileset from "./Tileset"
+import Map from "../User/Map"
+import Tileset from "../User/Tileset"
 import { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import LayersEdit  from "./LayersEdit"
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 const Sidemenu = () => {
   const [anchor,setAnchor]=useState(null)
   const openPopover=(e)=>{
@@ -30,6 +31,7 @@ const Sidemenu = () => {
   }
     return (
   <Drawer
+    anchor={'right'}
     variant="permanent"
     sx={{
       width: drawerWidth,
@@ -42,13 +44,7 @@ const Sidemenu = () => {
     <Box sx={{ overflow: 'auto' }}>
       <List>
           <Box textAlign='center'>
-            {/* Button for the  add menu */}
-            <Button variant='contained' sx={{marginTop:3, marginBottom:3, pr:4, pl:4, }} onClick={openPopover}>
-                <Typography variant="h3" component="h2">+</Typography>
-                <Typography variant="h6" component="h2">&nbsp; New</Typography>
-            </Button>
-      
-              {/* Menu for adding notes and tilesets */}
+            
               <Menu
                 id="basic-menu"
                 open={Boolean(anchor)}
@@ -75,20 +71,7 @@ const Sidemenu = () => {
     </Box>
     <Divider />
          {/* List of sidebar components */}
-    {[{name:'All', icon:<InboxIcon/>}, {name:'Maps', icon:<MapOutlinedIcon/>}, {name:'Tiles', icon:<GridViewOutlinedIcon/>}, {name:'Starred', icon:<StarBorderIcon/>}, {name:'Shared with me', icon:<FolderSharedOutlinedIcon/>}].map((text, index) => (
-        <ListItem key={text.name} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              {text.icon}
-            </ListItemIcon>
-            <ListItemText primary={text.name} />
-            
-            
-          </ListItemButton>
-          
-        </ListItem>
-        
-      ))}
+         <LayersEdit/>
         <Divider />
     </List>
     
