@@ -18,17 +18,17 @@ export default function LayersEdit() {
     </thead>
     <tbody>
         <tr>
-            <td>Map Width</td>
+            <td>Mountain</td>
             <td><Checkbox defaultChecked /></td>
         </tr>
         <tr class="active-row">
-        <td>Map Height</td>
+        <td>Grass</td>
             <td><Checkbox  defaultChecked /></td>
             
     
         </tr>
         <tr>
-            <td>Map Width</td>
+            <td>Water</td>
             
             <td><Checkbox  defaultChecked /></td>
             

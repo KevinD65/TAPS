@@ -1,5 +1,5 @@
 import React from "react";
-import { Table,TableRow, TableBody, TableCell,TableContainer,TableHead, Typography} from "@mui/material";
+import { Table,TableRow, TableBody, TableCell,TableContainer,TableHead, Checkbox, Typography, Divider} from "@mui/material";
 
 import "./mapEdit.css"
 function createData(number, item, qty, price) {
@@ -39,6 +39,14 @@ export default function MapEditNav() {
             
             <td>Tile Height</td>
             <td>16</td>
+        </tr>
+
+        <Divider/>
+
+        <tr class="active-row">
+            
+            <td>Colliadble</td>
+            <td><Checkbox  defaultChecked /></td>
         </tr>
         
     </tbody>

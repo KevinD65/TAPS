@@ -22,8 +22,10 @@ import { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import LayersEdit  from "./LayersEdit"
+import TilesetMap from "./TilesetMap";
+import Avatar from './Collaborators';
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 const Sidemenu = () => {
   const [anchor,setAnchor]=useState(null)
   const openPopover=(e)=>{
@@ -45,34 +47,14 @@ const Sidemenu = () => {
       <List>
           <Box textAlign='center'>
             
-              <Menu
-                id="basic-menu"
-                open={Boolean(anchor)}
-                anchorEl={anchor}
-                onClose={()=>{setAnchor(null)}}
-                PaperProps={{  
-                  style: {  
-                    width: 180,  
-                  }}}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
-                }}
-                
-              >
-                <MenuItem onClick={()=>{setAnchor(false)}}> <MapOutlinedIcon></MapOutlinedIcon> &nbsp; New Map</MenuItem>
-                <Divider></Divider>
-                <MenuItem onClick={()=>{setAnchor(false)}}> <GridViewOutlinedIcon/> &nbsp; New Tile</MenuItem>
-                
-              </Menu>
+              <Avatar/>
     </Box>
-    <Divider />
+    
          {/* List of sidebar components */}
          <LayersEdit/>
         <Divider />
+
+        <TilesetMap/>
     </List>
     
     
