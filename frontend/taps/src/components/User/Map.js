@@ -7,6 +7,9 @@ import { CardActionArea } from '@mui/material';
 import Waterfall from "../../static/waterfall.svg"
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import {useNavigate} from "react-router-dom"
+import Checkbox from '@mui/material/Checkbox';
+import StarBorder from '@mui/icons-material/StarBorder';
+import Star from '@mui/icons-material/Star';
 
 
 
@@ -26,13 +29,19 @@ const Map=({mapName})=> {
           image={Waterfall}
           alt="map"
         />
-        <CardContent>
+        <CardContent sx={{display:'flex'}}>
           
-          <Typography gutterBottom variant="h6" component="div">
-            <MapOutlinedIcon></MapOutlinedIcon>
+          
+            <MapOutlinedIcon sx={{mt:1}}></MapOutlinedIcon>
             
-          {mapName}
-          </Typography>
+            <Typography gutterBotto sx={{fontSize:"1.3rem",mt:1,ml:1}}  component="div">{mapName} </Typography>
+          
+            <Checkbox  aria-label='Checkbox demo'
+              icon={<StarBorder />} 
+              checkedIcon={<Star />} 
+              sx={{ boxShadow: 0.5 , ml:'auto'}}/>
+    
+          
           
         </CardContent>
       </CardActionArea>
