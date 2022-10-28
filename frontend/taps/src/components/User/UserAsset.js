@@ -1,31 +1,76 @@
-import React from "react";
-import Map from '../Assets/Map'
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Button,Grid,Popover } from '@mui/material';
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
+import Map from "./Map"
+import Tileset from "./Tileset"
+import { useState } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Sidemenu from './Sidemenu';
 
 
-const UserAsset = () => {
+const dummyData=[{name:"waterfall" ,image:"something.svg", owner:"abcd", type:"map",starred:0},{name:"Mario " ,image:"something.svg", owner:"abcd", type:"map",starred:0},{name:"My city" ,image:"something.svg", owner:"abcd1", type:"map",starred:1},{name:"mountain" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:0},{name:"soil" ,image:"something.svg", owner:"abcd2", type:"tiles",starred:1}]
 
-    /*
-    const toggle
+export default function UserAsset() {
+  
+  return (
+<Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <Sidemenu/> 
+         
+<Grid container direction="row">
 
-    const handleNewAsset = () =>{
 
-    }
+<Typography variant="h6" sx={{mt:4, ml:4, fontWeight:700}} >Maps <hr/></Typography>
+{/* This arranges the mapped data items in a grid  */}
+    <Grid container>
+      
+      {dummyData.map((data)=>{
+            if (data.type=="map"){
+                
+                return(
+                <Grid  item md={3} >
+                <Map mapName={data.name}/>
+                </Grid>
+            )}
+                  })}
+    </Grid>
 
 
-    return (
+  <Typography variant="h6" sx={{mt:4, ml:4, fontWeight:700}}  >Tilesets <hr/></Typography>
+    <Grid container   >
+      {dummyData.map((data)=>{
+            if (data.type=="tiles"){
+                  
+                return(
+                <Grid item  md={3} >
+                <Tileset  tileName={data.name}/>
+                
+                </Grid>
+      )}
+                      })}
+  
+    </Grid>
 
-        
-        
-    <div class="dropdown">
-        <button class="dropbtn">+ New</button>
-        <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-        </div>
-    </div>
-    )*/
+  </Grid>
+      
+</Box>
+    
+  );
 }
 
-export default UserAsset
