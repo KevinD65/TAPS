@@ -4,15 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
-import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -21,7 +13,7 @@ import { Button } from '@mui/material';
 import {Typography} from '@mui/material';
 
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 const Sidemenu = () => {
   const [anchor,setAnchor]=useState(null)
   const openPopover=(e)=>{
@@ -92,17 +84,19 @@ const Sidemenu = () => {
                 }}
                 
               >
-                <MenuItem onClick={()=>{setAnchor(false)}}> <MapOutlinedIcon></MapOutlinedIcon> &nbsp; Save As</MenuItem>
+                <MenuItem onClick={()=>{setAnchor(false)}}> <MapOutlinedIcon></MapOutlinedIcon> &nbsp; Save as Png</MenuItem>
+                <Divider></Divider>
+                <MenuItem onClick={()=>{setAnchor(false)}}> <MapOutlinedIcon></MapOutlinedIcon>&nbsp; Save As</MenuItem>
                 <Divider></Divider>
                 <MenuItem onClick={()=>{setAnchor(false)}}> <MapOutlinedIcon></MapOutlinedIcon>&nbsp; Save</MenuItem>
                 
               </Menu>
       
-              {/* Menu for adding notes and tilesets */}
+              
               
             </Box>
     <Divider />
-         {/* List of sidebar components */}
+         {/* Map properties*/}
          <MapEditNav/>
         <Divider />
     </List>
