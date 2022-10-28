@@ -17,7 +17,8 @@ const Map=({mapName})=> {
   console.log(mapName)
   const navigate= useNavigate();
   return (
-    <Card sx={{ width:250  ,ml:3, mr:3, mt:1 }}
+    <Card sx={{ width:250  ,ml:3, mr:3, mt:1,boxShadow: "4px 4px 4px #F0EBCE" , }}
+    
     onDoubleClick={()=>{
       navigate('/MapEditor');
     }}
@@ -29,7 +30,7 @@ const Map=({mapName})=> {
           image={Waterfall}
           alt="map"
         />
-        <CardContent sx={{display:'flex'}}>
+        <CardContent sx={{display:'flex',}}>
           
           
             <MapOutlinedIcon sx={{mt:1}}></MapOutlinedIcon>
@@ -38,7 +39,7 @@ const Map=({mapName})=> {
           
             <Checkbox  aria-label='Checkbox demo'
               icon={<StarBorder />} 
-              checkedIcon={<Star />} 
+              checkedIcon={<Star  sx={{color:"#AA8B56"}}/>} 
               sx={{ boxShadow: 0.5 , ml:'auto'}}/>
     
           

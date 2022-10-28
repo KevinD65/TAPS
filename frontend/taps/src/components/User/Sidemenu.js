@@ -30,11 +30,17 @@ const Sidemenu = () => {
   }
     return (
   <Drawer
+    PaperProps={{
+    sx: {
+      backgroundColor: "#F8EDE3"
+    }
+  }}
     variant="permanent"
     sx={{
       width: drawerWidth,
       flexShrink: 0,
       [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+      backgroundColor:"#F0EBCE"
     }}
       >
         
@@ -43,7 +49,7 @@ const Sidemenu = () => {
       <List>
           <Box textAlign='center'>
             {/* Button for the  add menu */}
-            <Button variant='contained' sx={{marginTop:3, marginBottom:3, pr:4, pl:4, }} onClick={openPopover}>
+            <Button variant='contained' sx={{marginTop:3, marginBottom:3, pr:4, pl:4, backgroundColor:"#4E6C50" ,color:"#F8EDE3"}} onClick={openPopover}>
                 <Typography variant="h3" component="h2">+</Typography>
                 <Typography variant="h6" component="h2">&nbsp; New</Typography>
             </Button>

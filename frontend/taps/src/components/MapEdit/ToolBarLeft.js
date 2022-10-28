@@ -25,7 +25,8 @@ const Sidemenu = () => {
     sx={{
       width: drawerWidth,
       flexShrink: 0,
-      [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+      [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', border:"0" },
+      boxShadow:"10px 10px 10px pink"
     }}
       >
         
@@ -34,7 +35,7 @@ const Sidemenu = () => {
       <List>
           <Box textAlign='center'>
             {/* Button for the  add menu */}
-            <Button aria-label ="import-button"variant='contained' sx={{marginTop:3, marginBottom:2, pr:4, pl:4, backgroundColor:"#009879" }} onClick={openPopover}>
+            <Button aria-label ="import-button"variant='contained' sx={{marginTop:3, marginBottom:2, pr:4, pl:4, backgroundColor:"#4E6C50" }} onClick={openPopover}>
                 <Typography variant="h6" component="h2">Import</Typography>
                 
             </Button>
@@ -62,7 +63,7 @@ const Sidemenu = () => {
                 <MenuItem onClick={()=>{setAnchor(false)}}> <MapOutlinedIcon></MapOutlinedIcon>&nbsp; New Map</MenuItem>
                 
               </Menu>
-              <Button variant='contained' sx={{marginTop:2, marginBottom:2, pr:5.5, pl:5.5, backgroundColor:"#009879" }} onClick={openPopover}>
+              <Button variant='contained' sx={{marginTop:2, marginBottom:2, pr:5.5, pl:5.5, backgroundColor:"#4E6C50" }} onClick={openPopover}>
                 <Typography variant="h6" component="h2">Save</Typography>
                 
             </Button>

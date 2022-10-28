@@ -15,7 +15,11 @@ const Navbar=()=> {
   const [value,setvalue]=useState(0)
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar position="fixed" 
+      sx={{ 
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor:"#395144"
+       }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -32,11 +36,11 @@ const Navbar=()=> {
           textColor='inherit' 
           value={value}  
           TabIndicatorProps={{
-    style: {backgroundColor: "white" }}} 
-    onChange={(e,value)=>{setvalue(value)}} sx={{ flexGrow: 1}}>
-            <Tab label="Home" component={Link} to={`/userAsset`} sx={{color:"white", fontWeight:700, marginRight:5}} /> 
-            <Tab label="Community" component={Link} to={`/community`} sx={{color:"white", fontWeight:700,marginRight:5}}/>
-            <Tab label="Profile" component={Link} to={`/userProfile`} sx={{color:"white", fontWeight:700,marginRight:5}}/>
+    style: {backgroundColor: "#AA8B56" }}} 
+    onChange={(e,value)=>{setvalue(value)}} sx={{ flexGrow: 1 , ml:4}}>
+            <Tab label="Home" component={Link} to={`/userAsset`} sx={{color:"#F8EDE3", fontWeight:700, marginRight:5}} /> 
+            <Tab label="Community" component={Link} to={`/community`} sx={{color:"#F8EDE3", fontWeight:700,marginRight:5}}/>
+            <Tab label="Profile" component={Link} to={`/userProfile`} sx={{color:"#F8EDE3", fontWeight:700,marginRight:5}}/>
             
           </Tabs>
           <Button color="inherit">Logout</Button>

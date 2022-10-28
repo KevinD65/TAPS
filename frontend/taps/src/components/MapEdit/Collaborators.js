@@ -7,8 +7,8 @@ import { Tooltip, Typography } from '@mui/material';
 export default function Collaborators() {
   return (
     <> 
-    <Typography sx={{color:"white" ,backgroundColor:"#009879" ,fontWeight:700, pl:2 ,pt:1,pb:1 ,mt:4,mb:2 }}>Collaborators</Typography>
-    <Stack sx={{pl:1}}direction="row" spacing={1}>
+    <Typography sx={{color:"white" ,backgroundColor:"#4E6C50" ,fontWeight:700, pl:2 ,pt:1,pb:1 ,mt:4,mb:2 }}>Collaborators</Typography>
+    <Stack sx={{pl:1, }}direction="row" spacing={1} >
       <Tooltip title="Max"><Avatar>MR</Avatar></Tooltip>
       <Tooltip title="Anmol"><Avatar  sx={{ bgcolor: deepOrange[500] }}>AS</Avatar></Tooltip>
       <Tooltip title="Kevin"><Avatar sx={{ bgcolor: deepPurple[500] }}>KD</Avatar></Tooltip>
