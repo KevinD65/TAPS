@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from "./components/Account/Login"
 import UserAsset from "./components/User/UserAsset"
-import UserProfile from "./components/User/UserProfile"
+import UserProfile from "./components/Profile/UserProfile"
 import Community from "./components/Community/Community"
 import Navbar from "./components/Navbar"
 import TileEditor from "./components/TileEdit/TileEditor"
@@ -17,7 +17,6 @@ function App() {
       </Routes>
       <Navbar/>
       <Routes>
-        
         <Route path='/userAsset' element={<UserAsset />}/>
         <Route path='/userProfile' element={<UserProfile />}/>
         <Route path='/community' element={<Community />}/>
