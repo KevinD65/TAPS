@@ -9,7 +9,7 @@ function createData(number, item, qty, price) {
 export default function MapEditNav() {
  return (
     <>
-    <Typography sx={{textAlign:"center" ,fontWeight:900}}>Properties</Typography>
+    <Typography sx={{textAlign:"center" ,fontWeight:900 ,}}>Properties</Typography>
     <table class="map-table">
     
     <thead>

@@ -29,7 +29,7 @@ const dummyData=[{name:"waterfall" ,image:"something.svg", owner:"abcd", type:"m
 export default function UserAsset() {
   
   return (
-<Box sx={{ display: 'flex' }}>
+<Box sx={{ display: 'flex' ,backgroundColor:"F0EBE3"}}>
       <CssBaseline />
       <Sidemenu/> 
          
