@@ -9,11 +9,12 @@
     float: left;
     width: 30%;
     height: 35%;
-    position: relative;
 }
 
 .login-screen-panel.login-panel{
     background-color: rgb(209,192,168);
+    height: fit-content;
+    padding-bottom: 2%;
 }
 
 .login-screen-panel.TAPSLogo{
@@ -94,7 +95,7 @@
 }
 
 #TAPS-logo-login{
-    height: 200px;
-    width: 600px;
+    height: 100%;
+    width: 100%;
 }
 
