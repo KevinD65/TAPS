@@ -12,7 +12,7 @@ test("Delete Tileset", async () => {
     const variables = { input: tileset };
     console.log(`TilesetInput: ${JSON.stringify(variables)}`);
 
-    let res = await fetch('http://localhost:42069/graphql', {
+    let res = await fetch('http://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
@@ -31,17 +31,17 @@ test("Delete Tileset", async () => {
 
     console.log(res)
     let idnum = res.data.addTileSet.id;
-    console.log(idnum)
+    console.log(typeof(idnum))
 
 
 
-    return fetch('http://localhost:42069/graphql', {
+    return fetch('http://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `mutation{
-            deleteTileSet(id: ${idnum}){
+            deleteTileSet(id: "${idnum}"){
                 image,
             }
           }`

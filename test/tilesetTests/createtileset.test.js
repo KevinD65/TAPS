@@ -13,7 +13,7 @@ test("Create Tileset", () => {
     const variables = { input: tileset };
     console.log(`TilesetInput: ${JSON.stringify(variables)}`);
 
-    return fetch('https://taps-backend.herokuapp.com/graphql', {
+    return fetch('https://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
