@@ -8,6 +8,7 @@ import Community from "./components/Community/Community"
 import Navbar from "./components/Navbar"
 import TileEditor from "./components/TileEdit/TileEditor"
 import MapEditor from "./components/MapEdit/MapEditor"
+import Layout from './components/Layout';
 
 
 function App() {
@@ -16,13 +17,14 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />}/>
       </Routes>
-      <Navbar/>
       <Routes>
-        <Route path='/userAsset' element={<UserAsset />}/>
-        <Route path='/userProfile' element={<UserProfile />}/>
-        <Route path='/community' element={<Community />}/>
-        <Route path='/tileEditor' element={<TileEditor />}/>
-        <Route path='/mapEditor' element={<MapEditor />}/>
+        <Route element={<Layout/>}>
+          <Route path='/userAsset' element={<UserAsset />}/>
+          <Route path='/userProfile' element={<UserProfile />}/>
+          <Route path='/community' element={<Community />}/>
+          <Route path='/tileEditor' element={<TileEditor />}/>
+          <Route path='/mapEditor' element={<MapEditor />}/>
+        </Route>
       </Routes>
     </div>
   );
