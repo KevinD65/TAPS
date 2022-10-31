@@ -11,11 +11,17 @@ import MenuItem from '@mui/material/MenuItem';
 //import MapEditNav from './MapEditNav';
 import { Button } from '@mui/material';
 import {Typography} from '@mui/material';
+import { ChromePicker } from 'react-color';
 
 
 const drawerWidth = 240;
-const Sidemenu = () => {
-  const [anchor,setAnchor]=useState(null)
+const Sidemenu = (props) => {
+  const [anchor,setAnchor]=useState(null);
+  const [color, changeColor] = useState('#fff');
+  const colorUpdate = (color, event) => {
+    props.updateBrushColorCallback(color);
+    changeColor(color);
+  }
   const openPopover=(e)=>{
     setAnchor(e.currentTarget)
   }
@@ -98,12 +104,13 @@ const Sidemenu = () => {
             </Box>
     <Divider />
          {/* Map properties*/}
+         <ChromePicker color={color} onChange={colorUpdate}/>
         <Divider />
     </List>
     
     
     
-  </Box>
+    </Box>
       </Drawer>
             
             
