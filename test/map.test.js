@@ -19,7 +19,7 @@ test("Add map", () => {
         }
     };
 
-    return fetch('https://taps-backend.herokuapp.com/graphql', {
+    return fetch('https://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
@@ -29,7 +29,7 @@ test("Add map", () => {
                 height:32,
                 infinite:false,
                 nextlayerid:4,
-                nextobjectid:"1",
+                nextobjectid:1,
                 orientation:"orthogonal",
                 renderorder:"right-down",
                 tiledversion:"1.8.2",

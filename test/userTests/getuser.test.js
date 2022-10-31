@@ -11,7 +11,7 @@ test("Get User", () => {
         ]
     };
 
-    fetch('https://taps-backend.herokuapp.com/graphql', {
+    fetch('https://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API

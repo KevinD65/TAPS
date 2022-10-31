@@ -1,7 +1,7 @@
 require('isomorphic-fetch');
 
 test("Create User", () => {
-    const newMap = {
+    const newuser = {
         "createUser": {
             "username": "Kev",
             "hash": "1234",
@@ -9,7 +9,7 @@ test("Create User", () => {
         }
     };
 
-    return fetch('https://taps-backend.herokuapp.com/graphql', {
+    return fetch('https://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
@@ -25,5 +25,5 @@ test("Create User", () => {
     })
     .then(res => res.json())
     // The test condition itself
-    .then(res => expect(res.data).toEqual(newMap));
+    .then(res =>  expect(res.data).toEqual(newuser));
 })

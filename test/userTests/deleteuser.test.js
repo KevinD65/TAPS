@@ -9,7 +9,7 @@ test("Delete User", async () => {
         }
     };
 
-    let res = await fetch('https://taps-backend.herokuapp.com/graphql', {
+    let res = await fetch('https://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
@@ -25,7 +25,7 @@ test("Delete User", async () => {
     
     let idnum = res.data.createUser.id;
 
-    return fetch('https://taps-backend.herokuapp.com/graphql', {
+    return fetch('https://taps416.herokuapp.com/graphql', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // The query we are sending to the GraphQL API
