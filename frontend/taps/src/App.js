@@ -13,9 +13,6 @@ import Layout from './components/Layout';
 
 function App() {
   return (
-    <>
-    <div>Hello World</div>
-    {/*
     <div id='screen'>
       <Routes>
         <Route path='/' element={<Login />}/>
@@ -30,8 +27,6 @@ function App() {
         </Route>
       </Routes>
     </div>
-  */}
-  </>
   );
 }
 
