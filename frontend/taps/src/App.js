@@ -12,9 +12,6 @@ import MapEditor from "./components/MapEdit/MapEditor"
 
 function App() {
   return (
-    <>
-    <div>Hello World</div>
-    {/*
     <div id='screen'>
       <Routes>
         <Route path='/' element={<Login />}/>
@@ -28,8 +25,6 @@ function App() {
         <Route path='/mapEditor' element={<MapEditor />}/>
       </Routes>
     </div>
-  */}
-  </>
   );
 }
 
