@@ -1,9 +1,19 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
+const UserType = require("./UserType");
 const MapType = new GraphQLObjectType({
     name: 'Map',
     fields: () => ({
         id: {type: GraphQLID},
-        ownerID: {type: GraphQLInt},
+        name: {type: GraphQLString},
+        image: {type: GraphQLString},
+        starred: {type: GraphQLBoolean},
+        ownerID: {type: GraphQLID},
+        owner: {
+            type: UserType,
+            resolve(parent, args){
+                return User.findById(parent.ownerId);
+            }
+        },
         backgroundColor: {type: GraphQLString},
         class: {type: GraphQLString},
         compressionLevel: {type: GraphQLFloat},

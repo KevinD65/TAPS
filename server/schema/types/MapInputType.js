@@ -5,8 +5,11 @@ const MapInputType = new GraphQLInputObjectType({
     name: "MapInput",
     fields: () => ({
         id: {type: GraphQLID},
+        name: {type: GraphQLString},
+        image: {type: GraphQLString},
+        starred: {type: GraphQLBoolean},
         compressionlevel: {type: GraphQLInt},
-        ownerID: {type: GraphQLInt},
+        ownerID: {type: GraphQLID},
         backgroundColor: {type: GraphQLString},
         class: {type: GraphQLString},
         compressionLevel: {type: GraphQLFloat},
