@@ -1,8 +1,19 @@
 const mongoose = require('mongoose');
 const {Layer, LayerSchema} = require("./Layer");
+Schema = mongoose.Schema;
+
 const MapSchema = new mongoose.Schema({
+    name: {
+        type: String,
+    },
+    image: {
+        type: String,
+    },
+    starred: {
+        type: Boolean,
+    },
     ownerID: {
-        type: Number
+        type: Schema.Types.ObjectId
     },
     backgroundColor: {
         type: String,

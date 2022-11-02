@@ -8,6 +8,7 @@ const LayerInputType = require("./types/LayerInputType");
 const TilesetInputType = require("./types/TilesetInputType");
 const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
+const UserType = require("./types/UserType");
 
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
 
@@ -38,15 +39,7 @@ const ProjectType = new GraphQLObjectType({
     })
 });
 
-const UserType = new GraphQLObjectType({
-    name: 'User',
-    fields: () => ({
-        id: {type: GraphQLID},
-        hash: {type: GraphQLString},
-        username: {type: GraphQLString},
-        bio: {type: GraphQLString},
-    })
-});
+
 
 
 
@@ -234,6 +227,7 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parent, args){
                 let input = args.MapInput;
+                console.log(args);
                 const map = new Map(input);
                 map.layers.forEach(l => {
                     const layer = new Layer(l);
@@ -242,6 +236,21 @@ const mutation = new GraphQLObjectType({
                 });
                 console.log(map);
                 return map.save();
+            }
+        },
+        changeMapName:{
+            type: MapType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                name: {type: GraphQLString},
+            },
+            async resolve(parent, args){
+                const map = await Map.findByIdAndUpdate(
+                    args.id,
+                    {name: args.name},
+                    {new: true},
+                );
+                return map;
             }
         },
         updateMap:{
@@ -450,7 +459,7 @@ const RootQuery = new GraphQLObjectType({
         },
         getOwnerMaps: {
             type: GraphQLList(MapType),
-            args: {ownerID: {type: GraphQLInt}},
+            args: {ownerID: {type: GraphQLID}},
             resolve(parent, args){
                 return Map.find({ownerID: args.ownerID});
             }
