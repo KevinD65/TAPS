@@ -4,9 +4,9 @@ test("Get User", () => {
     const newMap = {
         "getUser": [
             {
-              "name": "Kevin",
-              "email": "kevinduong@yahoo.com",
+              "name": "KEVINDUONGBABY",
               "username": "Kev",
+              "email": "kevinduong@yahoo.com",
               "hash": "1234",
               "bio": "Software Engineer"
             }
