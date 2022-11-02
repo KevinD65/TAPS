@@ -17,7 +17,7 @@ test("Update User", async () => {
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `mutation{
-            updateUser(id: "635639cb164bf6f078855fc1", newuser: "Changed", newhash: "4567", newbio: "Mechanical Engineer"){
+            updateUser(id: "635639cb164bf6f078855fc1", newuser: "Bobby Shmurda", newusername: "Changed", newemail: "GoNewYorkGoNewYorkGo@gmail.com", newhash: "4567", newbio: "Mechanical Engineer"){
               name,
               username,
               email,
