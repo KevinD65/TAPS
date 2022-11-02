@@ -137,12 +137,16 @@ const mutation = new GraphQLObjectType({
         createUser:{
             type: UserType,
             args: {
+                name: {type: GraphQLString},
+                email: {type: GraphQLString},
                 username: {type: GraphQLString},
                 hash: {type: GraphQLString},
                 bio: { type: GraphQLString }
             },
             resolve(paren, args){
                 let user = new User({
+                    name: args.name,
+                    email: args.email,
                     username: args.username,
                     hash: args.hash,
                     bio: args.bio,
@@ -155,6 +159,8 @@ const mutation = new GraphQLObjectType({
             args: {
                 id: {type: GraphQLNonNull(GraphQLID)},
                 newuser: {type: GraphQLString},
+                newusername: {type: GraphQLString},
+                newemail: {type: GraphQLString},
                 newhash: {type: GraphQLString},
                 newbio: { type: GraphQLString }
             },
@@ -163,7 +169,9 @@ const mutation = new GraphQLObjectType({
                     args.id,
                     {
                         $set: {
-                            username: args.newuser,
+                            name: args.newuser,
+                            username: args.newusername,
+                            email: args.newemail,
                             hash: args.newhash,
                             bio: args.newbio,
                         }

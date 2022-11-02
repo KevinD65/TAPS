@@ -3,7 +3,9 @@ require('isomorphic-fetch');
 test("Update User", async () => {
     const newUser = {
         "updateUser": {
+            "name": "Bobby Shmurda",
             "username": "Changed",
+            "email": "GoNewYorkGoNewYorkGo@gmail.com",
             "hash": "4567",
             "bio": "Mechanical Engineer"
         }
@@ -16,7 +18,9 @@ test("Update User", async () => {
     body: JSON.stringify({ query: 
         `mutation{
             updateUser(id: "635639cb164bf6f078855fc1", newuser: "Changed", newhash: "4567", newbio: "Mechanical Engineer"){
+              name,
               username,
+              email,
               hash,
               bio
             }
@@ -32,8 +36,10 @@ test("Update User", async () => {
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `mutation{
-            updateUser(id: "635639cb164bf6f078855fc1", username: "Kev", hash: "1234", bio: "Software Engineer"){
+            updateUser(id: "635639cb164bf6f078855fc1", name: "Kevin", username: "Kev", email: "kevinduong@yahoo.com", hash: "1234", bio: "Software Engineer"){
+              name,
               username,
+              email,
               hash,
               bio,
             }

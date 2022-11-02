@@ -3,7 +3,9 @@ require('isomorphic-fetch');
 test("Delete User", async () => {
     const newMap = {
         "deleteUser": {
+            "name": "Joe Mama",
             "username": "To be deleted",
+            "email": "JoeMama@JoeMama.com",
             "hash": "4567",
             "bio": "Software Engineer"
         }
@@ -15,7 +17,7 @@ test("Delete User", async () => {
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `mutation{
-            createUser(username: "To be deleted", hash: "4567", bio: "Software Engineer"){
+            createUser(name: "Joe Mama", username: "To be deleted", email: "JoeMama@JoeMama.com", hash: "4567", bio: "Software Engineer"){
               id,
             }
           }` 
@@ -32,7 +34,9 @@ test("Delete User", async () => {
     body: JSON.stringify({ query: 
         `mutation{
             deleteUser(id: "${idnum}"){
+              name,
               username,
+              email,
               hash,
               bio,
             }

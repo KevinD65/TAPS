@@ -4,7 +4,9 @@ test("Get User", () => {
     const newMap = {
         "getUser": [
             {
-              "username": "Anmol",
+              "name": "Kevin",
+              "email": "kevinduong@yahoo.com",
+              "username": "Kev",
               "hash": "1234",
               "bio": "Software Engineer"
             }
@@ -17,8 +19,10 @@ test("Get User", () => {
     // The query we are sending to the GraphQL API
     body: JSON.stringify({ query: 
         `{
-            getUser(username: "Anmol") {
+            getUser(username: "Kev") {
+              name
               username
+              email
               hash
               bio
             }
