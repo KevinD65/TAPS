@@ -10,6 +10,8 @@ const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
 const UserType = require("./types/UserType");
 
+const tokens = require('../tokens');
+
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
 
 
@@ -38,10 +40,6 @@ const ProjectType = new GraphQLObjectType({
         }
     })
 });
-
-
-
-
 
 const ChunkType = new GraphQLObjectType({
     name: 'Chunk',
@@ -124,12 +122,6 @@ const LayerType = new GraphQLObjectType({
 
     })
 });
-
-
-
-
-
-
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
