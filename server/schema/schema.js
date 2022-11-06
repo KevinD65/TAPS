@@ -412,10 +412,31 @@ const RootQuery = new GraphQLObjectType({
         },
         getUser:{
             type: GraphQLList(UserType),
-            args: {username: {type: GraphQLString}},
+            args: {username: {type: GraphQLString}, email: {type: GraphQLString}},
             resolve(parent, args){
-                console.log(args.username);
-                return User.find({username: args.username});
+
+                return User.find({"$or": [{username: args.username}, {email: args.email}]});
+
+                /*
+                if(User.find({email: args.email})){
+                    return User.find({email: args.email});
+                }
+                else{
+                    return User.find({username: args.username});
+                }*/
+
+                //return User.find({email: args.email}); //this works
+                
+                /*
+                if(args.username && !args.email){
+                    return User.find({username: args.username});
+                }
+                else if(!args.username && args.email){
+                    return User.find({email: args.email});
+                }
+                else{
+                    return User.find({username: args.username, email: args.email});
+                }*/
             }
         },
         projects:{

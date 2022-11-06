@@ -1,4 +1,3 @@
-
 const jwt = require("jsonwebtoken");
 const config = process.env;
 const { REFRESH_TOKEN_SECRET, ACCESS_TOKEN_SECRET } = process.env;
