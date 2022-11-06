@@ -10,6 +10,8 @@ const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
 const UserType = require("./types/UserType");
 
+const tokens = require('../tokens');
+
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
 
 
@@ -38,10 +40,6 @@ const ProjectType = new GraphQLObjectType({
         }
     })
 });
-
-
-
-
 
 const ChunkType = new GraphQLObjectType({
     name: 'Chunk',
@@ -124,12 +122,6 @@ const LayerType = new GraphQLObjectType({
 
     })
 });
-
-
-
-
-
-
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -420,10 +412,31 @@ const RootQuery = new GraphQLObjectType({
         },
         getUser:{
             type: GraphQLList(UserType),
-            args: {username: {type: GraphQLString}},
+            args: {username: {type: GraphQLString}, email: {type: GraphQLString}},
             resolve(parent, args){
-                console.log(args.username);
-                return User.find({username: args.username});
+
+                return User.find({"$or": [{username: args.username}, {email: args.email}]});
+
+                /*
+                if(User.find({email: args.email})){
+                    return User.find({email: args.email});
+                }
+                else{
+                    return User.find({username: args.username});
+                }*/
+
+                //return User.find({email: args.email}); //this works
+                
+                /*
+                if(args.username && !args.email){
+                    return User.find({username: args.username});
+                }
+                else if(!args.username && args.email){
+                    return User.find({email: args.email});
+                }
+                else{
+                    return User.find({username: args.username, email: args.email});
+                }*/
             }
         },
         projects:{
