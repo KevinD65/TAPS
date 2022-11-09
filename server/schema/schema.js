@@ -136,6 +136,7 @@ const mutation = new GraphQLObjectType({
                 bio: { type: GraphQLString }
             },
             resolve(paren, args){
+                console.log("FROM CREATEUSER I AM HERE");
                 let user = new User({
                     name: args.name,
                     email: args.email,
@@ -150,22 +151,22 @@ const mutation = new GraphQLObjectType({
             type: UserType,
             args: {
                 id: {type: GraphQLNonNull(GraphQLID)},
-                newuser: {type: GraphQLString},
-                newusername: {type: GraphQLString},
-                newemail: {type: GraphQLString},
-                newhash: {type: GraphQLString},
-                newbio: { type: GraphQLString }
+                name: {type: GraphQLString},
+                username: {type: GraphQLString},
+                email: {type: GraphQLString},
+                hash: {type: GraphQLString},
+                bio: { type: GraphQLString }
             },
-            resolve(paren, args){
+            resolve(parent, args){
                 return User.findByIdAndUpdate(
                     args.id,
                     {
                         $set: {
-                            name: args.newuser,
-                            username: args.newusername,
-                            email: args.newemail,
-                            hash: args.newhash,
-                            bio: args.newbio,
+                            name: args.name,
+                            username: args.username,
+                            email: args.email,
+                            hash: args.hash,
+                            bio: args.bio,
                         }
                     },
                     {new: true},
