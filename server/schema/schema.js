@@ -13,7 +13,10 @@ const UserType = require("./types/UserType");
 const tokens = require('../tokens');
 
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
-
+const nodemailer = require('nodemailer');
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const { TOKEN_SECRET_KEY } = process.env;
 
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -135,8 +138,7 @@ const mutation = new GraphQLObjectType({
                 hash: {type: GraphQLString},
                 bio: { type: GraphQLString }
             },
-            resolve(paren, args){
-                console.log("FROM CREATEUSER I AM HERE");
+            resolve(parent, args){
                 let user = new User({
                     name: args.name,
                     email: args.email,
@@ -180,6 +182,63 @@ const mutation = new GraphQLObjectType({
             },
             resolve(paren, args){
                 return User.findByIdAndRemove(args.id);
+            }
+        },
+        sendRecoveryEmail:{
+            type: UserType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                email: {type: GraphQLString},
+                hash: {type: GraphQLString}
+            },
+            async resolve(parent, args){
+                let testAccount = nodemailer.createTestAccount((err, account) => {
+                    if(err){
+                        console.log("ERROR OCCURRED WHILE CREATING TEST ACCOUNT");
+                    }
+                    /*
+                    else{
+                        console.log(account.user);
+                    }*/
+                });
+                console.log("CREATED TEST ACCOUNT");
+
+                //given the userID, email, and timestamp, encrypt the link and store it in the user DB
+
+                // create reusable transporter object using the default SMTP transport (fake test email)
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.ethereal.email',
+                    port: 587,
+                    auth: {
+                        user: 'ashleigh.windler16@ethereal.email', //put in .env
+                        pass: 'HTQbZSFyqztfS6Qsq5' //put in .env
+                    }
+                });
+
+                //CREATE JWT-Simple TOKEN FOR ONE-TIME-USE PASSWORD RESET LINK
+                let payload = { id: args.id, email: args.email};
+                let secret = args.hash + Date.now();
+                //let expiration = moment().add(30, 'seconds').valueOf();
+                let token = jwt.encode(payload, secret /*,{exp: expiration}*/);
+
+                await User.findByIdAndUpdate(args.id, {pwResetHash: secret}); //store the password reset hash in the DB
+
+                //let decode = jwt.decode(token, secret);
+
+                //console.log(decode);
+
+                console.log("CREATED TRANSPORTER OBJECT");
+
+                // send mail with defined transport object
+                let info = await transporter.sendMail({
+                    from: 'kevin.duong10@yahoo.com', // sender address
+                    to: "cortanakd@gmail.com", // list of receivers
+                    subject: "Hello", // Subject line
+                    text: "Hello world?", // plain text body
+                    html: "<a href=http://localhost:3000/resetpassword/" + args.id + '/' + token + ">Reset password</a>" //change this to deployed netlify version later
+                });
+
+                console.log("SENT EMAIL");
             }
         },
         addTileSet:{
@@ -412,32 +471,14 @@ const RootQuery = new GraphQLObjectType({
             }
         },
         getUser:{
-            type: GraphQLList(UserType),
-            args: {username: {type: GraphQLString}, email: {type: GraphQLString}},
+            type: UserType,
+            args: {id: {type: GraphQLID}, username: {type: GraphQLString}, email: {type: GraphQLString}},
             resolve(parent, args){
-
-                return User.find({"$or": [{username: args.username}, {email: args.email}]});
-
-                /*
-                if(User.find({email: args.email})){
-                    return User.find({email: args.email});
+                //console.log("RESOLVING GETUSER");
+                if(args.id){
+                    return User.findById(args.id);
                 }
-                else{
-                    return User.find({username: args.username});
-                }*/
-
-                //return User.find({email: args.email}); //this works
-                
-                /*
-                if(args.username && !args.email){
-                    return User.find({username: args.username});
-                }
-                else if(!args.username && args.email){
-                    return User.find({email: args.email});
-                }
-                else{
-                    return User.find({username: args.username, email: args.email});
-                }*/
+                return User.findOne({"$or": [{username: args.username}, {email: args.email}]});
             }
         },
         projects:{
@@ -491,7 +532,17 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 return Map.find();
             }
-        }
+        },
+        getResetPasswordTokenValidation: {
+            type: GraphQLBoolean,
+            async resolve(parent, args){
+                console.log("VALIDATING TOKEN...");
+                let user = await User.findById(args.id);
+                let payload = jwt.decode(args.token, user.pwResetHash);
+                console.log(payload);
+                return payload;
+            }
+        },
     }
 });
 module.exports = new GraphQLSchema({
