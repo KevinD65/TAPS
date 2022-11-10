@@ -5,7 +5,8 @@ const UserSchema = new mongoose.Schema({
     username: { type: String },
     email: {type: String},
     hash: { type: String},
-    bio: { type: String }
+    bio: { type: String },
+    pwResetHash: {type: String},
 });
 
 module.exports = mongoose.model('User', UserSchema);
