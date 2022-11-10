@@ -8,6 +8,7 @@ const LayerInputType = require("./types/LayerInputType");
 const TilesetInputType = require("./types/TilesetInputType");
 const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
+const TilesetType = require("./types/TilesetType");
 const UserType = require("./types/UserType");
 
 const tokens = require('../tokens');
@@ -53,37 +54,7 @@ const ChunkType = new GraphQLObjectType({
     })
 });
 
-const TilesetType = new GraphQLObjectType({
-    name: 'Tileset',
-    fields: () => ({
-        id: {type: GraphQLID},
-        backgroundcolor: {type: GraphQLString},
-        class: {type: GraphQLString},
-        columns: {type: GraphQLInt},
-        fillmode: {type: GraphQLString},
-        firstgid: {type: GraphQLInt},
-        //grid: {type: Grid},
-        image: {type: GraphQLString},
-        imageheight: {type: GraphQLInt},
-        imagewidth: {type: GraphQLInt},
-        margin: {type: GraphQLInt},
-        objectalignment: {type: GraphQLString},
-        //properties: {type: [Property]},
-        source: {type: GraphQLInt},
-        //terrains: {type: [Terrain]},
-        tilecount: {type: GraphQLInt},
-        source: {type: GraphQLString},
-        tiledversion: {type: GraphQLString},
-        tilerendersize: {type: GraphQLString},
-        //tiles: {type: [Tile]},
-        tilewidth: {type: GraphQLInt},
-        //transformations: {type: Transformation},
-        transparentcolor: {type: GraphQLString},
-        type: {type: GraphQLString},
-        version: {type: GraphQLString}
 
-    })
-});
 
 const LayerType = new GraphQLObjectType({
     name: 'Layer',

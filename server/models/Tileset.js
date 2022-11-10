@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+Schema = mongoose.Schema;
 const TilesetSchema = new mongoose.Schema({
+    ownerID: {type: Schema.Types.ObjectId },
     backgroundcolor: {type: String},
     class: {type: String},
     columns: {type: Number},
