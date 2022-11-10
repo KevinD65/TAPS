@@ -1,10 +1,10 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
-
-const TilesetInputType = new GraphQLInputObjectType({
-    name: "TileInput",
-    fields: {
-        backgroundcolor: {type: GraphQLString},
+const TilesetType = new GraphQLObjectType({
+    name: 'Tileset',
+    fields: () => ({
+        id: {type: GraphQLID},
         ownerID: {type: GraphQLID},
+        backgroundcolor: {type: GraphQLString},
         class: {type: GraphQLString},
         columns: {type: GraphQLInt},
         fillmode: {type: GraphQLString},
@@ -14,15 +14,12 @@ const TilesetInputType = new GraphQLInputObjectType({
         imageheight: {type: GraphQLInt},
         imagewidth: {type: GraphQLInt},
         margin: {type: GraphQLInt},
-        name: {type: GraphQLString},
         objectalignment: {type: GraphQLString},
         //properties: {type: [Property]},
-        spacing:{type: GraphQLInt},
         source: {type: GraphQLInt},
         //terrains: {type: [Terrain]},
         tilecount: {type: GraphQLInt},
         source: {type: GraphQLString},
-        tileheight: {type: GraphQLInt},
         tiledversion: {type: GraphQLString},
         tilerendersize: {type: GraphQLString},
         //tiles: {type: [Tile]},
@@ -31,7 +28,8 @@ const TilesetInputType = new GraphQLInputObjectType({
         transparentcolor: {type: GraphQLString},
         type: {type: GraphQLString},
         version: {type: GraphQLString}
-    },
+
+    })
 });
 
-module.exports = TilesetInputType;
+module.exports = TilesetType;
