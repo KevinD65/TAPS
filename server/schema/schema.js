@@ -145,6 +145,7 @@ const mutation = new GraphQLObjectType({
                     username: args.username,
                     hash: args.hash,
                     bio: args.bio,
+                    pwResetHash: ""
                 });
                 return user.save();
             }
@@ -196,12 +197,7 @@ const mutation = new GraphQLObjectType({
                     if(err){
                         console.log("ERROR OCCURRED WHILE CREATING TEST ACCOUNT");
                     }
-                    /*
-                    else{
-                        console.log(account.user);
-                    }*/
                 });
-                console.log("CREATED TEST ACCOUNT");
 
                 //given the userID, email, and timestamp, encrypt the link and store it in the user DB
 
@@ -221,13 +217,7 @@ const mutation = new GraphQLObjectType({
                 //let expiration = moment().add(30, 'seconds').valueOf();
                 let token = jwt.encode(payload, secret /*,{exp: expiration}*/);
 
-                await User.findByIdAndUpdate(args.id, {pwResetHash: secret}); //store the password reset hash in the DB
-
-                //let decode = jwt.decode(token, secret);
-
-                //console.log(decode);
-
-                console.log("CREATED TRANSPORTER OBJECT");
+                let myUser = await User.findByIdAndUpdate(args.id, {pwResetHash: secret}); //store the password reset hash in the DB
 
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
@@ -237,6 +227,8 @@ const mutation = new GraphQLObjectType({
                     text: "Hello world?", // plain text body
                     html: "<a href=http://localhost:3000/resetpassword/" + args.id + '/' + token + ">Reset password</a>" //change this to deployed netlify version later
                 });
+
+                return myUser;
 
                 console.log("SENT EMAIL");
             }
@@ -471,10 +463,13 @@ const RootQuery = new GraphQLObjectType({
             }
         },
         getUser:{
-            type: UserType,
-            args: {id: {type: GraphQLID}, username: {type: GraphQLString}, email: {type: GraphQLString}},
+            type: /*GraphQLNonNull(UserType)*/UserType, //making this non-null causes an issue on sign-up because it couldn't find a User that matched the parameters to return
+            args: {
+                id: {type: GraphQLID}, 
+                username: {type: GraphQLString}, 
+                email: {type: GraphQLString}
+            },
             resolve(parent, args){
-                //console.log("RESOLVING GETUSER");
                 if(args.id){
                     return User.findById(args.id);
                 }
@@ -533,14 +528,29 @@ const RootQuery = new GraphQLObjectType({
                 return Map.find();
             }
         },
-        getResetPasswordTokenValidation: {
-            type: GraphQLBoolean,
+        validateResetPWToken: {
+            type: UserType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                token: {type: GraphQLNonNull(GraphQLString)}
+            },
             async resolve(parent, args){
-                console.log("VALIDATING TOKEN...");
                 let user = await User.findById(args.id);
-                let payload = jwt.decode(args.token, user.pwResetHash);
-                console.log(payload);
-                return payload;
+                if(user == undefined){
+                    console.log("user does not exist");
+                    throw new Error;
+                }
+                else{
+                    let payload;
+                    try{
+                        payload = jwt.decode(args.token, user.pwResetHash);
+                    }
+                    catch(err){
+                        console.log("TOKEN ERROR");
+                        throw new Error;
+                    }
+                }
+                return user;
             }
         },
     }
