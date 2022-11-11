@@ -12,7 +12,7 @@ const UserType = new GraphQLObjectType({
         username: {type: GraphQLString},
         hash: {type: GraphQLString},
         bio: {type: GraphQLString},
-        pwResetHash: {type: GraphQLString}
+        pwResetHash: {type: GraphQLString},
         maps: {
             type: GraphQLList(MapType),
             resolve(parent, args){
