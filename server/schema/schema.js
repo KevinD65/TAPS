@@ -3,6 +3,7 @@ const Client = require('../models/Client');
 const Tileset = require('../models/Tileset');
 const User = require('../models/User');
 const Map = require('../models/Map');
+const Folder = require('../models/Folder');
 const {Layer, LayerSchema} = require('../models/Layer');
 const LayerInputType = require("./types/LayerInputType");
 const TilesetInputType = require("./types/TilesetInputType");
@@ -10,6 +11,7 @@ const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
 const TilesetType = require("./types/TilesetType");
 const UserType = require("./types/UserType");
+const FolderType = require("./types/Folder");
 
 const tokens = require('../tokens');
 
@@ -228,6 +230,21 @@ const mutation = new GraphQLObjectType({
                 const tileset = await Tileset.findByIdAndUpdate(
                     args.id,
                     { $set: input },
+                    {new: true},
+                );
+                return tileset;
+            }
+        },
+        changeTilesetName:{
+            type: MapType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                name: {type: GraphQLString},
+            },
+            async resolve(parent, args){
+                const tileset = await Tileset.findByIdAndUpdate(
+                    args.id,
+                    {name: args.name},
                     {new: true},
                 );
                 return tileset;
@@ -490,7 +507,21 @@ const RootQuery = new GraphQLObjectType({
             type: GraphQLList(MapType),
             args: {ownerID: {type: GraphQLID}},
             resolve(parent, args){
-                return Map.find({ownerID: args.ownerID});
+                return Map.find({ownerID: args.ownerID, folderId: null});
+            }
+        },
+        getOwnerTilesets: {
+            type: GraphQLList(TilesetType),
+            args: {ownerID: {type: GraphQLID}},
+            resolve(parent, args){
+                return Tileset.find({ownerID: args.ownerID, folderId: null});
+            }
+        },
+        getOwnerFolders: {
+            type: GraphQLList(FolderType),
+            args: {ownerID: {type: GraphQLID}},
+            resolve(parent, args){
+                return Folder.find({ownerID: args.ownerID});
             }
         },
         getMaps: {
