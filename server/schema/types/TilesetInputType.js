@@ -3,6 +3,9 @@ const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList,
 const TilesetInputType = new GraphQLInputObjectType({
     name: "TileInput",
     fields: {
+        name: {type: GraphQLString},
+        image: {type: GraphQLString},
+        starred: {type: GraphQLBoolean},
         backgroundcolor: {type: GraphQLString},
         ownerID: {type: GraphQLID},
         class: {type: GraphQLString},

@@ -15,6 +15,7 @@ const MapSchema = new mongoose.Schema({
     ownerID: {
         type: Schema.Types.ObjectId
     },
+    folderId: {type: Schema.Types.ObjectId},
     backgroundColor: {
         type: String,
     },
