@@ -7,6 +7,7 @@ const TilesetType = new GraphQLObjectType({
         starred: {type: GraphQLBoolean},
         id: {type: GraphQLID},
         ownerID: {type: GraphQLID},
+        folderId: {type: GraphQLID},
         backgroundcolor: {type: GraphQLString},
         class: {type: GraphQLString},
         columns: {type: GraphQLInt},

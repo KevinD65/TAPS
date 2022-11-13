@@ -158,6 +158,53 @@ const mutation = new GraphQLObjectType({
                 return User.findByIdAndRemove(args.id);
             }
         },
+        createFolder:{
+            type: FolderType,
+            args: {
+                name: {type: GraphQLString},
+                ownerID: {type: GraphQLID},
+                folderId: {type: GraphQLID},
+            },
+            resolve(parent, args){
+                let folder = new Folder({
+                    name: args.name,
+                    ownerID: args.ownerID,
+                    folderId: args.folderId
+                });
+                return folder.save();
+            }
+        },
+        updateFolder:{
+            type: FolderType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+                name: {type: GraphQLString},
+                ownerID: {type: GraphQLID},
+                folderId: {type: GraphQLID},
+            },
+            resolve(parent, args){
+                return Folder.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set: {
+                            name: args.name,
+                            ownerID: args.ownerID,
+                            folderId: args.folderId,
+                        }
+                    },
+                    {new: true},
+                );
+            }
+        },
+        deleteFolder:{
+            type: FolderType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLID)},
+            },
+            resolve(paren, args){
+                return Folder.findByIdAndRemove(args.id);
+            }
+        },
         sendRecoveryEmail:{
             type: UserType,
             args: {
@@ -519,9 +566,9 @@ const RootQuery = new GraphQLObjectType({
         },
         getOwnerFolders: {
             type: GraphQLList(FolderType),
-            args: {ownerID: {type: GraphQLID}},
+            args: {ownerID: {type: GraphQLID}, folderId: {type: GraphQLID}},
             resolve(parent, args){
-                return Folder.find({ownerID: args.ownerID});
+                return Folder.find({folderId: args.folderId, ownerID: args.ownerID});
             }
         },
         getMaps: {

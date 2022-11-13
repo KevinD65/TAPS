@@ -7,6 +7,7 @@ const MapType = new GraphQLObjectType({
         image: {type: GraphQLString},
         starred: {type: GraphQLBoolean},
         ownerID: {type: GraphQLID},
+        folderId: {type: GraphQLID},
         backgroundColor: {type: GraphQLString},
         class: {type: GraphQLString},
         compressionLevel: {type: GraphQLFloat},

@@ -10,6 +10,7 @@ const FolderType = new GraphQLObjectType({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
         ownerID: {type: GraphQLID},
+        folderId: {type: GraphQLID},
         maps: {
             type: GraphQLList(MapType),
             resolve(parent, args){
