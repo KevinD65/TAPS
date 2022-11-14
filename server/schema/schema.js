@@ -259,10 +259,12 @@ const mutation = new GraphQLObjectType({
                 let info = await transporter.sendMail({
                     from: "kevin.duong10@yahoo.com", // sender address
                     to: "cortanakd@gmail.com", // list of receivers
-                    subject: "Hello", // Subject line
-                    text: "Hello world?", // plain text body
-                    html: "<a href=http://localhost:3000/resetpassword/" + args.id + '/' + token + ">Reset password</a>" //change this to deployed netlify version later
+                    subject: "TAPS Password Reset", // Subject line
+                    text: "", // plain text body
+                    html: "<a href=https://jazzy-conkies-1e7e08.netlify.app/resetpassword/" + args.id + '/' + token + ">Click here to reset password</a>" //change this to deployed netlify version later
                 });
+
+                //http://localhost:3000/resetpassword/" 
 
                 console.log("SENT EMAIL");
 
