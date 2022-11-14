@@ -543,7 +543,7 @@ const RootQuery = new GraphQLObjectType({
                 return Tileset.find();
             }
         },
-        /*getTilesetsWithTag: {
+        getTilesetsWithTag: {
             type: GraphQLList(TilesetType),
             args: {tag: {type: GraphQLString},
                    search: {type: GraphQLString}
@@ -566,7 +566,7 @@ const RootQuery = new GraphQLObjectType({
                   ])
                 //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
             }
-        },*/
+        },
         getTileset: {
             type: TilesetType,
             args: { id: {type: GraphQLID}},
@@ -593,6 +593,30 @@ const RootQuery = new GraphQLObjectType({
             args: {ownerID: {type: GraphQLID}, folderId: {type: GraphQLID}},
             resolve(parent, args){
                 return Folder.find({folderId: args.folderId, ownerID: args.ownerID});
+            }
+        },
+        getFoldersWithTag: {
+            type: GraphQLList(FolderType),
+            args: {tag: {type: GraphQLString},
+                   search: {type: GraphQLString}
+                },
+            resolve(parent, args){
+                return Folder.aggregate([
+                    {
+                        
+                      $search: {
+                        index: 'searchFolders',
+                        text: {
+                          query: args.search,
+                          path: {
+                            'wildcard': '*'
+                          }
+                        }
+                      }
+                    },
+                    { $match : { tags : args.tag } }
+                  ])
+                //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
             }
         },
         getMapsWithTag: {
