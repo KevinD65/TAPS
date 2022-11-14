@@ -2,8 +2,12 @@ const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList,
 const TilesetType = new GraphQLObjectType({
     name: 'Tileset',
     fields: () => ({
+        name: {type: GraphQLString},
+        image: {type: GraphQLString},
+        starred: {type: GraphQLBoolean},
         id: {type: GraphQLID},
         ownerID: {type: GraphQLID},
+        folderId: {type: GraphQLID},
         backgroundcolor: {type: GraphQLString},
         class: {type: GraphQLString},
         columns: {type: GraphQLInt},

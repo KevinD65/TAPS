@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 Schema = mongoose.Schema;
 const TilesetSchema = new mongoose.Schema({
+    name: { type: String },
+    image: { type: String },
+    starred: {type: Boolean },
     ownerID: {type: Schema.Types.ObjectId },
+    folderId: {type: Schema.Types.ObjectId},
     backgroundcolor: {type: String},
     class: {type: String},
     columns: {type: Number},
