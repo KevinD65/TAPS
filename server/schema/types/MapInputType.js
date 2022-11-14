@@ -26,6 +26,7 @@ const MapInputType = new GraphQLInputObjectType({
         renderorder: {type: GraphQLString},
         staggeraxis: {type: GraphQLString},
         staggerindex: {type: GraphQLString},
+        tags: {type: GraphQLList(GraphQLString)},
         tiledversion: {type: GraphQLString},
         tileheight: {type: GraphQLFloat},
         tilesets: {type: GraphQLList(TilesetInputType)},

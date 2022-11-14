@@ -65,6 +65,10 @@ const MapSchema = new mongoose.Schema({
     },
     staggerindex: {
         type: String,
+    },   
+    //added tags to schema, array of tag strings
+    tags: {
+        type: [String],
     },
     tiledversion: {
         type: String,
