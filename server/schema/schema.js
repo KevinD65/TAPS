@@ -222,6 +222,20 @@ const mutation = new GraphQLObjectType({
                 //given the userID, email, and timestamp, encrypt the link and store it in the user DB
 
                 // create reusable transporter object using the default SMTP transport (fake test email)
+                /*
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.gmail.com',
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        user: process.env.TAPS_EMAIL,
+                        pass: process.env.TAPS_PASSWORD
+                    }
+                });
+
+                console.log("CREATED TRANSPORTER OBJECT :)");
+                console.log(process.env.TAPS_PASSWORD);*/
+
                 const transporter = nodemailer.createTransport({
                     host: 'smtp.ethereal.email',
                     port: 587,
@@ -239,18 +253,20 @@ const mutation = new GraphQLObjectType({
 
                 let myUser = await User.findByIdAndUpdate(args.id, {pwResetHash: secret}); //store the password reset hash in the DB
 
+                //console.log("SENDING EMAIL");
+
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
-                    from: 'kevin.duong10@yahoo.com', // sender address
+                    from: "kevin.duong10@yahoo.com", // sender address
                     to: "cortanakd@gmail.com", // list of receivers
                     subject: "Hello", // Subject line
                     text: "Hello world?", // plain text body
                     html: "<a href=http://localhost:3000/resetpassword/" + args.id + '/' + token + ">Reset password</a>" //change this to deployed netlify version later
                 });
 
-                return myUser;
-
                 console.log("SENT EMAIL");
+
+                return myUser;
             }
         },
         addTileSet:{
