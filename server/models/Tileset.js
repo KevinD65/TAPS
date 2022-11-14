@@ -19,6 +19,7 @@ const TilesetSchema = new mongoose.Schema({
     objectalignment: {type: String},
     //properties: {type: [Property]},
     source: {type: Number},
+    tags: {type: [String]},
     //terrains: {type: [Terrain]},
     tilecount: {type: Number},
     source: {type: String},

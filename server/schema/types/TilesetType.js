@@ -22,6 +22,7 @@ const TilesetType = new GraphQLObjectType({
         //properties: {type: [Property]},
         source: {type: GraphQLInt},
         //terrains: {type: [Terrain]},
+        tags: {type: GraphQLList(GraphQLString)},
         tilecount: {type: GraphQLInt},
         source: {type: GraphQLString},
         tiledversion: {type: GraphQLString},

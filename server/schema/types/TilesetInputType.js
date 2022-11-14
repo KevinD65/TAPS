@@ -22,6 +22,7 @@ const TilesetInputType = new GraphQLInputObjectType({
         //properties: {type: [Property]},
         spacing:{type: GraphQLInt},
         source: {type: GraphQLInt},
+        tags: {type: GraphQLList(GraphQLString)},
         //terrains: {type: [Terrain]},
         tilecount: {type: GraphQLInt},
         source: {type: GraphQLString},
