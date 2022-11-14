@@ -543,6 +543,30 @@ const RootQuery = new GraphQLObjectType({
                 return Tileset.find();
             }
         },
+        /*getTilesetsWithTag: {
+            type: GraphQLList(TilesetType),
+            args: {tag: {type: GraphQLString},
+                   search: {type: GraphQLString}
+                },
+            resolve(parent, args){
+                return Tileset.aggregate([
+                    {
+                        
+                      $search: {
+                        index: 'searchTilesets',
+                        text: {
+                          query: args.search,
+                          path: {
+                            'wildcard': '*'
+                          }
+                        }
+                      }
+                    },
+                    { $match : { tags : args.tag } }
+                  ])
+                //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
+            }
+        },*/
         getTileset: {
             type: TilesetType,
             args: { id: {type: GraphQLID}},
@@ -569,6 +593,30 @@ const RootQuery = new GraphQLObjectType({
             args: {ownerID: {type: GraphQLID}, folderId: {type: GraphQLID}},
             resolve(parent, args){
                 return Folder.find({folderId: args.folderId, ownerID: args.ownerID});
+            }
+        },
+        getMapsWithTag: {
+            type: GraphQLList(MapType),
+            args: {tag: {type: GraphQLString},
+                   search: {type: GraphQLString}
+                },
+            resolve(parent, args){
+                return Map.aggregate([
+                    {
+                        
+                      $search: {
+                        index: 'searchMaps',
+                        text: {
+                          query: args.search,
+                          path: {
+                            'wildcard': '*'
+                          }
+                        }
+                      }
+                    },
+                    { $match : { tags : args.tag } }
+                  ])
+                //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
             }
         },
         getMaps: {
