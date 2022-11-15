@@ -237,11 +237,11 @@ const mutation = new GraphQLObjectType({
                 console.log(process.env.TAPS_PASSWORD);*/
 
                 const transporter = nodemailer.createTransport({
-                    host: 'smtp.ethereal.email',
+                    host: 'SMTP.office365.com'/*'smtp.ethereal.email'*/,
                     port: 587,
                     auth: {
-                        user: 'ashleigh.windler16@ethereal.email', //put in .env
-                        pass: 'HTQbZSFyqztfS6Qsq5' //put in .env
+                        user: process.env.TAPS_EMAIL/*'ashleigh.windler16@ethereal.email'*/, //put in .env
+                        pass: process.env.TAPS_PASSWORD/*'HTQbZSFyqztfS6Qsq5'*/ //put in .env
                     }
                 });
 
@@ -257,13 +257,14 @@ const mutation = new GraphQLObjectType({
 
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
-                    from: "kevin.duong10@yahoo.com", // sender address
-                    to: "cortanakd@gmail.com", // list of receivers
+                    from: process.env.TAPS_EMAIL/*"kevin.duong10@yahoo.com"*/, // sender address
+                    to: args.email/*"cortanakd@gmail.com"*/, // list of receivers
                     subject: "TAPS Password Reset", // Subject line
                     text: "", // plain text body
-                    html: "<a href=https://jazzy-conkies-1e7e08.netlify.app/resetpassword/" + args.id + '/' + token + ">Click here to reset password</a>" //change this to deployed netlify version later
+                    html: "<a href= https://jazzy-conkies-1e7e08.netlify.app/resetpassword/" + args.id + '/' + token + ">Click here to reset password</a>" //change this to deployed netlify version later
                 });
 
+                //https://jazzy-conkies-1e7e08.netlify.app/resetpassword/
                 //http://localhost:3000/resetpassword/" 
 
                 console.log("SENT EMAIL");
