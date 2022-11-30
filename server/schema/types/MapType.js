@@ -39,7 +39,8 @@ const MapType = new GraphQLObjectType({
         type: { type: GraphQLString},
         version: {type: GraphQLString},
         width: {type: GraphQLFloat},
-        bio: {type: GraphQLString}
+        bio: {type: GraphQLString},
+        isEditing: {type: GraphQLID} 
     })
 });
 
