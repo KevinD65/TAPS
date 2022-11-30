@@ -504,6 +504,38 @@ const mutation = new GraphQLObjectType({
                 );
             }
         },
+        toggleLock: {
+            type: GraphQLBoolean,
+            args:{
+                id: {type: GraphQLNonNull(GraphQLID)},
+                assetType: {type: GraphQLString},
+                userId: {type: GraphQLID},
+                lock: {type: GraphQLBoolean}
+            },
+            async resolve(parent, args){
+                let asset;
+                if(args.assetType === "Map"){
+                    asset = await Map.findById(args.id);
+                }
+                else if(args.assetType === "Tileset"){
+                    asset = await Tileset.findById(args.id);
+                }
+                else{
+                    return false;
+                }
+                if(!args.lock){
+                    asset.isEditing = null;
+                }
+                else if(args.lock){
+                    if(asset.isEditing){
+                        return false;
+                    }
+                    asset.isEditing = args.userId;
+                }
+                asset.save();
+                return true;
+            }
+        }
     }
 });
 

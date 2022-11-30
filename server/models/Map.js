@@ -98,7 +98,8 @@ const MapSchema = new mongoose.Schema({
         type: Number,
         
     },
-    bio: {type: String}
+    bio: {type: String},
+    isEditing: {type: Schema.Types.ObjectId }
     
 });
 

@@ -35,7 +35,8 @@ const TilesetType = new GraphQLObjectType({
         transparentcolor: {type: GraphQLString},
         type: {type: GraphQLString},
         version: {type: GraphQLString},
-        bio: {type: GraphQLString}
+        bio: {type: GraphQLString},
+        isEditing: {type: GraphQLID} 
 
     })
 });
