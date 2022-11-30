@@ -36,7 +36,8 @@ const TilesetInputType = new GraphQLInputObjectType({
         //transformations: {type: Transformation},
         transparentcolor: {type: GraphQLString},
         type: {type: GraphQLString},
-        version: {type: GraphQLString}
+        version: {type: GraphQLString},
+        bio: {type: GraphQLString}
     },
 });
 

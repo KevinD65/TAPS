@@ -97,7 +97,8 @@ const MapSchema = new mongoose.Schema({
     width: {
         type: Number,
         
-    }
+    },
+    bio: {type: String}
     
 });
 

@@ -33,7 +33,8 @@ const MapInputType = new GraphQLInputObjectType({
         tilewidth: {type: GraphQLFloat},
         type: { type: GraphQLString},
         version: {type: GraphQLString},
-        width: {type: GraphQLFloat}
+        width: {type: GraphQLFloat},
+        bio: {type: GraphQLString}
     })
 });
 
