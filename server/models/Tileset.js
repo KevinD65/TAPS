@@ -31,7 +31,8 @@ const TilesetSchema = new mongoose.Schema({
     //transformations: {type: Transformation},
     transparentcolor: {type: String},
     type: {type: String},
-    version: {type: String}
+    version: {type: String},
+    bio:{type: String}
 });
 
 module.exports = mongoose.model('Tileset', TilesetSchema);
