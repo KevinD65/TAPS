@@ -1,4 +1,8 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
+const UserType = require("./UserType");
+
+const User = require('../../models/User');
+
 const MapType = new GraphQLObjectType({
     name: 'Map',
     fields: () => ({
@@ -14,6 +18,23 @@ const MapType = new GraphQLObjectType({
         height: {type: GraphQLFloat},
         hexSideLength: {type: GraphQLFloat},
         infinite: {type: GraphQLBoolean},
+        collabIDs:{type:GraphQLList(GraphQLID)},
+        collabolators:{
+           type: GraphQLList(UserType),
+           async resolve(parent, args){
+               let a=[];
+               let ids=parent.collabIDs
+ 
+               for (const id of ids){
+                  
+                   let b= await User.findById(id);
+                   console.log(b)
+                  a.push(b)
+               }
+             
+               return a
+           }
+       },
 
         /*
         layers: {

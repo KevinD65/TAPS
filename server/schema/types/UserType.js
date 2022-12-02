@@ -1,8 +1,5 @@
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType, GraphQLInt, GraphQLInputObjectType, GraphQLFloat, GraphQLBoolean, GraphQLScalarType } = require('graphql');
-const MapType = require("./MapType");
-const TilesetType = require("./TilesetType");
-const Map = require('../../models/Map');
-const Tileset = require('../../models/Tileset');
+
 const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
@@ -13,18 +10,7 @@ const UserType = new GraphQLObjectType({
         hash: {type: GraphQLString},
         bio: {type: GraphQLString},
         pwResetHash: {type: GraphQLString},
-        maps: {
-            type: GraphQLList(MapType),
-            resolve(parent, args){
-                return Map.find({ownerID: parent.id});
-            } 
-        },
-        tilesets: {
-            type: GraphQLList(TilesetType),
-            resolve(parent, args){
-                return Tileset.find({ownerID: parent.id});
-            }
-        }
+      
     })
 });
 

@@ -10,8 +10,10 @@ const TilesetInputType = require("./types/TilesetInputType");
 const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
 const TilesetType = require("./types/TilesetType");
-const UserType = require("./types/UserType");
+
 const FolderType = require("./types/Folder");
+const UserType = require("../schema/types/UserType");
+
 
 const tokens = require('../tokens');
 
@@ -196,6 +198,66 @@ const mutation = new GraphQLObjectType({
                 );
             }
         },
+        addCollaboratorMap:{
+            type:MapType,
+            args:{
+                id:{type:GraphQLID},
+                username:{type:GraphQLString}
+  
+            },
+            async resolve(parent,args){
+                let user = await User.findOne({"$or": [{username: args.username}]});
+                
+                if(!user){
+                    return null
+                }
+                let ts=await Map.findById(args.id)
+               
+                let collabs= ts.collabIDs
+                console.log(collabs)
+                 
+
+                 const found = collabs.some(el => el.toString() === user.id);
+                if (!found) collabs.push(user.id);
+                return Map.findByIdAndUpdate(args.id,
+                    {
+                        $set:{
+                            collabIDs:collabs
+                        }
+                },{new:true} )
+            }
+        },
+
+        addCollaborator:{
+            type:TilesetType,
+            args:{
+                id:{type:GraphQLID},
+                username:{type:GraphQLString}
+  
+            },
+            async resolve(parent,args){
+                let user = await User.findOne({"$or": [{username: args.username}]});
+                
+                if(!user){
+                    return null
+                }
+                let ts=await Tileset.findById(args.id)
+               
+                let collabs= ts.collabIDs
+                console.log(collabs)
+                 
+
+                 const found = collabs.some(el => el.toString() === user.id);
+                if (!found) collabs.push(user.id);
+                return Tileset.findByIdAndUpdate(args.id,
+                    {
+                        $set:{
+                            collabIDs:collabs
+                        }
+                },{new:true} )
+            }
+        },
+ 
         deleteFolder:{
             type: FolderType,
             args: {
@@ -235,7 +297,6 @@ const mutation = new GraphQLObjectType({
 
                 console.log("CREATED TRANSPORTER OBJECT :)");
                 console.log(process.env.TAPS_PASSWORD);*/
-
                 const transporter = nodemailer.createTransport({
                     host: 'SMTP.office365.com'/*'smtp.ethereal.email'*/,
                     port: 587,
@@ -301,6 +362,8 @@ const mutation = new GraphQLObjectType({
                 return tileset;
             }
         },
+
+        
         changeTilesetName:{
             type: MapType,
             args: {
@@ -562,12 +625,15 @@ const RootQuery = new GraphQLObjectType({
                 return User.findOne({"$or": [{username: args.username}, {email: args.email}]});
             }
         },
+
         projects:{
             type: GraphQLList(ProjectType),
             resolve(parent, args){
                 return Project.find();
             }
         },
+
+        
         project: {
             type: ProjectType,
             args: { id: {type: GraphQLID}},
@@ -586,6 +652,21 @@ const RootQuery = new GraphQLObjectType({
             args: { id: {type: GraphQLID}},
             resolve(parent, args){
                 return Client.findById(args.id);
+            }
+        },
+        getMap: {
+            type:MapType,
+            args: { id: {type: GraphQLID}},
+            resolve(parent, args){
+                return Map.findById(args.id);
+            }
+        },
+       getCollaborators: {
+            type: GraphQLList(UserType),
+            args: { id: {type: GraphQLID}},
+            resolve(parent, args){
+                let a=Tileset.findById(args.id);
+                return a.collaborators;
             }
         },
         tilesets: {
@@ -631,6 +712,22 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 return Map.find({ownerID: args.ownerID, folderId: null});
             }
+        },
+        getSharedTilesets:{
+            type: GraphQLList(TilesetType),
+            args:{id:{type:GraphQLID}},
+            resolve(parent, args){
+                return Tileset.find({collabIDs:args.id})
+            }
+
+        },
+        getSharedMaps:{
+            type: GraphQLList(MapType),
+            args:{id:{type:GraphQLID}},
+            resolve(parent, args){
+                return Map.find({collabIDs:args.id})
+            }
+
         },
         getOwnerTilesets: {
             type: GraphQLList(TilesetType),
