@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {Layer, LayerSchema} = require("./Layer");
+const {User, UserSchema} = require("./User");
 Schema = mongoose.Schema;
 
 const MapSchema = new mongoose.Schema({
@@ -19,6 +20,8 @@ const MapSchema = new mongoose.Schema({
     backgroundColor: {
         type: String,
     },
+    collabIDs:{type:[Schema.Types.ObjectId]},
+    collaborators:{type:[User]},
     class: {
         type: String,
     },
