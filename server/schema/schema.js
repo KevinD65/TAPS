@@ -429,7 +429,9 @@ const mutation = new GraphQLObjectType({
                 MapInput: {type: MapInputType}
             },
             async resolve(parent, args){
+                console.log("PUTTING IN INPUT");
                 let input = args.MapInput;
+                console.log(input.mapHeight);
                 const map = await Map.findByIdAndUpdate(
                     args.id,
                     { $set: input },

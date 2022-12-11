@@ -62,7 +62,13 @@ const MapType = new GraphQLObjectType({
         version: {type: GraphQLString},
         width: {type: GraphQLFloat},
         bio: {type: GraphQLString},
-        isEditing: {type: GraphQLID} 
+        isEditing: {type: GraphQLID},
+        mapData: {type: GraphQLString},
+        importedTileList: {type: GraphQLString},
+        tilesets: {type: GraphQLString},
+        layerOrder: {type: GraphQLString},
+        mapHeight: {type: GraphQLInt},
+        mapWidth: {type: GraphQLInt} 
     })
 });
 

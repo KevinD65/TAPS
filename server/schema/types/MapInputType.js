@@ -34,7 +34,14 @@ const MapInputType = new GraphQLInputObjectType({
         type: { type: GraphQLString},
         version: {type: GraphQLString},
         width: {type: GraphQLFloat},
-        bio: {type: GraphQLString}
+        bio: {type: GraphQLString},
+
+        mapData: {type: GraphQLString},
+        importedTileList: {type: GraphQLString},
+        tilesets: {type: GraphQLString},
+        layerOrder: {type: GraphQLString},
+        mapHeight: {type: GraphQLInt},
+        mapWidth: {type: GraphQLInt}
     })
 });
 
