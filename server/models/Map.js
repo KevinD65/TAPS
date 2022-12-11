@@ -102,7 +102,13 @@ const MapSchema = new mongoose.Schema({
         
     },
     bio: {type: String},
-    isEditing: {type: Schema.Types.ObjectId }
+    isEditing: {type: Schema.Types.ObjectId },
+    mapData: {type: String},
+    importedTileList: {type: String},
+    tilesets: {type: String},
+    layerOrder: {type: String},
+    mapHeight: {type: Number},
+    mapWidth: {type: Number}
     
 });
 
