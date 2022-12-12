@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {User, UserSchema} = require("./User");
 Schema = mongoose.Schema;
 const TilesetSchema = new mongoose.Schema({
     name: { type: String },
@@ -8,6 +9,8 @@ const TilesetSchema = new mongoose.Schema({
     dataURLs: {type: [String]},
     folderId: {type: Schema.Types.ObjectId},
     backgroundcolor: {type: String},
+    collabIDs:{type:[Schema.Types.ObjectId]},
+    collaborators:{type:[User]},
     class: {type: String},
     columns: {type: Number},
     fillmode: {type: String},
@@ -20,6 +23,7 @@ const TilesetSchema = new mongoose.Schema({
     objectalignment: {type: String},
     //properties: {type: [Property]},
     source: {type: Number},
+    tags: {type: [String]},
     //terrains: {type: [Terrain]},
     tilecount: {type: Number},
     source: {type: String},

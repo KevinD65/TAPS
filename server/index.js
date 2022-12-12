@@ -9,6 +9,7 @@ const app = express();
 
 const cors = require('cors');
 
+app.use(express.json({ limit: "100mb" }));
 
 connectDB();
 

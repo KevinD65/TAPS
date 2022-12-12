@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const {Layer, LayerSchema} = require("./Layer");
+const {User, UserSchema} = require("./User");
 Schema = mongoose.Schema;
 
 const MapSchema = new mongoose.Schema({
@@ -19,6 +20,8 @@ const MapSchema = new mongoose.Schema({
     backgroundColor: {
         type: String,
     },
+    collabIDs:{type:[Schema.Types.ObjectId]},
+    collaborators:{type:[User]},
     class: {
         type: String,
     },
@@ -66,6 +69,10 @@ const MapSchema = new mongoose.Schema({
     },
     staggerindex: {
         type: String,
+    },   
+    //added tags to schema, array of tag strings
+    tags: {
+        type: [String],
     },
     tiledversion: {
         type: String,
@@ -95,7 +102,13 @@ const MapSchema = new mongoose.Schema({
         
     },
     bio: {type: String},
-    isEditing: {type: Schema.Types.ObjectId }
+    isEditing: {type: Schema.Types.ObjectId },
+    mapData: {type: String},
+    importedTileList: {type: String},
+    tilesets: {type: String},
+    layerOrder: {type: String},
+    mapHeight: {type: Number},
+    mapWidth: {type: Number}
     
 });
 

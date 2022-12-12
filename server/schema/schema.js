@@ -10,8 +10,10 @@ const TilesetInputType = require("./types/TilesetInputType");
 const MapInputType = require("./types/MapInputType");
 const MapType = require("./types/MapType");
 const TilesetType = require("./types/TilesetType");
-const UserType = require("./types/UserType");
+
 const FolderType = require("./types/Folder");
+const UserType = require("../schema/types/UserType");
+
 
 const tokens = require('../tokens');
 
@@ -196,6 +198,66 @@ const mutation = new GraphQLObjectType({
                 );
             }
         },
+        addCollaboratorMap:{
+            type:MapType,
+            args:{
+                id:{type:GraphQLID},
+                username:{type:GraphQLString}
+  
+            },
+            async resolve(parent,args){
+                let user = await User.findOne({"$or": [{username: args.username}]});
+                
+                if(!user){
+                    return null
+                }
+                let ts=await Map.findById(args.id)
+               
+                let collabs= ts.collabIDs
+                console.log(collabs)
+                 
+
+                 const found = collabs.some(el => el.toString() === user.id);
+                if (!found) collabs.push(user.id);
+                return Map.findByIdAndUpdate(args.id,
+                    {
+                        $set:{
+                            collabIDs:collabs
+                        }
+                },{new:true} )
+            }
+        },
+
+        addCollaborator:{
+            type:TilesetType,
+            args:{
+                id:{type:GraphQLID},
+                username:{type:GraphQLString}
+  
+            },
+            async resolve(parent,args){
+                let user = await User.findOne({"$or": [{username: args.username}]});
+                
+                if(!user){
+                    return null
+                }
+                let ts=await Tileset.findById(args.id)
+               
+                let collabs= ts.collabIDs
+                console.log(collabs)
+                 
+
+                 const found = collabs.some(el => el.toString() === user.id);
+                if (!found) collabs.push(user.id);
+                return Tileset.findByIdAndUpdate(args.id,
+                    {
+                        $set:{
+                            collabIDs:collabs
+                        }
+                },{new:true} )
+            }
+        },
+ 
         deleteFolder:{
             type: FolderType,
             args: {
@@ -222,12 +284,25 @@ const mutation = new GraphQLObjectType({
                 //given the userID, email, and timestamp, encrypt the link and store it in the user DB
 
                 // create reusable transporter object using the default SMTP transport (fake test email)
+                /*
                 const transporter = nodemailer.createTransport({
-                    host: 'smtp.ethereal.email',
+                    host: 'smtp.gmail.com',
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        user: process.env.TAPS_EMAIL,
+                        pass: process.env.TAPS_PASSWORD
+                    }
+                });
+
+                console.log("CREATED TRANSPORTER OBJECT :)");
+                console.log(process.env.TAPS_PASSWORD);*/
+                const transporter = nodemailer.createTransport({
+                    host: 'SMTP.office365.com'/*'smtp.ethereal.email'*/,
                     port: 587,
                     auth: {
-                        user: 'ashleigh.windler16@ethereal.email', //put in .env
-                        pass: 'HTQbZSFyqztfS6Qsq5' //put in .env
+                        user: process.env.TAPS_EMAIL/*'ashleigh.windler16@ethereal.email'*/, //put in .env
+                        pass: process.env.TAPS_PASSWORD/*'HTQbZSFyqztfS6Qsq5'*/ //put in .env
                     }
                 });
 
@@ -239,18 +314,23 @@ const mutation = new GraphQLObjectType({
 
                 let myUser = await User.findByIdAndUpdate(args.id, {pwResetHash: secret}); //store the password reset hash in the DB
 
+                //console.log("SENDING EMAIL");
+
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
-                    from: 'kevin.duong10@yahoo.com', // sender address
-                    to: "cortanakd@gmail.com", // list of receivers
-                    subject: "Hello", // Subject line
-                    text: "Hello world?", // plain text body
-                    html: "<a href=http://localhost:3000/resetpassword/" + args.id + '/' + token + ">Reset password</a>" //change this to deployed netlify version later
+                    from: process.env.TAPS_EMAIL/*"kevin.duong10@yahoo.com"*/, // sender address
+                    to: args.email/*"cortanakd@gmail.com"*/, // list of receivers
+                    subject: "TAPS Password Reset", // Subject line
+                    text: "", // plain text body
+                    html: "<a href= https://jazzy-conkies-1e7e08.netlify.app/resetpassword/" + args.id + '/' + token + ">Click here to reset password</a>" //change this to deployed netlify version later
                 });
 
-                return myUser;
+                //https://jazzy-conkies-1e7e08.netlify.app/resetpassword/
+                //http://localhost:3000/resetpassword/" 
 
                 console.log("SENT EMAIL");
+
+                return myUser;
             }
         },
         addTileSet:{
@@ -282,6 +362,8 @@ const mutation = new GraphQLObjectType({
                 return tileset;
             }
         },
+
+        
         changeTilesetName:{
             type: MapType,
             args: {
@@ -347,7 +429,9 @@ const mutation = new GraphQLObjectType({
                 MapInput: {type: MapInputType}
             },
             async resolve(parent, args){
+                console.log("PUTTING IN INPUT");
                 let input = args.MapInput;
+                console.log(input.mapHeight);
                 const map = await Map.findByIdAndUpdate(
                     args.id,
                     { $set: input },
@@ -548,12 +632,15 @@ const RootQuery = new GraphQLObjectType({
                 return User.findOne({"$or": [{username: args.username}, {email: args.email}]});
             }
         },
+
         projects:{
             type: GraphQLList(ProjectType),
             resolve(parent, args){
                 return Project.find();
             }
         },
+
+        
         project: {
             type: ProjectType,
             args: { id: {type: GraphQLID}},
@@ -574,10 +661,49 @@ const RootQuery = new GraphQLObjectType({
                 return Client.findById(args.id);
             }
         },
+        getMap: {
+            type:MapType,
+            args: { id: {type: GraphQLID}},
+            resolve(parent, args){
+                return Map.findById(args.id);
+            }
+        },
+       getCollaborators: {
+            type: GraphQLList(UserType),
+            args: { id: {type: GraphQLID}},
+            resolve(parent, args){
+                let a=Tileset.findById(args.id);
+                return a.collaborators;
+            }
+        },
         tilesets: {
             type: GraphQLList(TilesetType),
             resolve(parent, args){
                 return Tileset.find();
+            }
+        },
+        getTilesetsWithTag: {
+            type: GraphQLList(TilesetType),
+            args: {tag: {type: GraphQLString},
+                   search: {type: GraphQLString}
+                },
+            resolve(parent, args){
+                return Tileset.aggregate([
+                    {
+                        
+                      $search: {
+                        index: 'searchTilesets',
+                        text: {
+                          query: args.search,
+                          path: {
+                            'wildcard': '*'
+                          }
+                        }
+                      }
+                    },
+                    { $match : { tags : args.tag } }
+                  ])
+                //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
             }
         },
         getTileset: {
@@ -594,6 +720,22 @@ const RootQuery = new GraphQLObjectType({
                 return Map.find({ownerID: args.ownerID, folderId: null});
             }
         },
+        getSharedTilesets:{
+            type: GraphQLList(TilesetType),
+            args:{id:{type:GraphQLID}},
+            resolve(parent, args){
+                return Tileset.find({collabIDs:args.id})
+            }
+
+        },
+        getSharedMaps:{
+            type: GraphQLList(MapType),
+            args:{id:{type:GraphQLID}},
+            resolve(parent, args){
+                return Map.find({collabIDs:args.id})
+            }
+
+        },
         getOwnerTilesets: {
             type: GraphQLList(TilesetType),
             args: {ownerID: {type: GraphQLID}},
@@ -606,6 +748,54 @@ const RootQuery = new GraphQLObjectType({
             args: {ownerID: {type: GraphQLID}, folderId: {type: GraphQLID}},
             resolve(parent, args){
                 return Folder.find({folderId: args.folderId, ownerID: args.ownerID});
+            }
+        },
+        getFoldersWithTag: {
+            type: GraphQLList(FolderType),
+            args: {tag: {type: GraphQLString},
+                   search: {type: GraphQLString}
+                },
+            resolve(parent, args){
+                return Folder.aggregate([
+                    {
+                        
+                      $search: {
+                        index: 'searchFolders',
+                        text: {
+                          query: args.search,
+                          path: {
+                            'wildcard': '*'
+                          }
+                        }
+                      }
+                    },
+                    { $match : { tags : args.tag } }
+                  ])
+                //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
+            }
+        },
+        getMapsWithTag: {
+            type: GraphQLList(MapType),
+            args: {tag: {type: GraphQLString},
+                   search: {type: GraphQLString}
+                },
+            resolve(parent, args){
+                return Map.aggregate([
+                    {
+                        
+                      $search: {
+                        index: 'searchMaps',
+                        text: {
+                          query: args.search,
+                          path: {
+                            'wildcard': '*'
+                          }
+                        }
+                      }
+                    },
+                    { $match : { tags : args.tag } }
+                  ])
+                //return Map.find({"$or": [{tags: args.tag},{ $text : { $search : "text to look for" } }]});
             }
         },
         getMaps: {
