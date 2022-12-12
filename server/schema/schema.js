@@ -592,10 +592,15 @@ const mutation = new GraphQLObjectType({
                     asset.isEditing = null;
                 }
                 else if(args.lock){
-                    if(asset.isEditing){
-                        return false;
+                    if(asset.isEditing == null){
+                        asset.isEditing = args.userId;
                     }
-                    asset.isEditing = args.userId;
+                    else if(asset.isEditing === args.userId){
+                        return true;
+                    }
+                    else if(asset.isEditing){
+                        return false;
+                    }   
                 }
                 asset.save();
                 return true;
